@@ -1,0 +1,140 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import {
+  createPharmacySchema,
+  CreatePharmacyValues,
+} from "@/validation/create-pharmacy-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+const CreatePharmacyDialog = () => {
+  const form = useForm<CreatePharmacyValues>({
+    resolver: zodResolver(createPharmacySchema),
+    mode: "onChange",
+    defaultValues: {
+      name: "",
+      address: "",
+      isBranch: false,
+      expirayThreshold: 30,
+    },
+  });
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="default">Create Pharmacy</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create Pharmacy</DialogTitle>
+          <DialogDescription>
+            Create a new pharmacy here, Click save when you are done.
+          </DialogDescription>
+        </DialogHeader>
+        <Separator />
+        <Form {...form}>
+          <form className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Pharmacy Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="rounded-sm"
+                      placeholder="Pharmacy Name"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="rounded-sm"
+                      placeholder="Address"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isBranch"
+              render={({ field }) => (
+                <FormItem className="flex w-fit items-center gap-3 rounded-sm border p-3 shadow-sm">
+                  <div className="space-y-0.5">
+                    <FormLabel>Is this a branch?</FormLabel>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      className="rounded-sm"
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="expirayThreshold"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Expiry Threshold (days)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      className="rounded-sm"
+                      placeholder="e.g. 30"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+        <Separator />
+        <DialogFooter>
+          Footer
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CreatePharmacyDialog;

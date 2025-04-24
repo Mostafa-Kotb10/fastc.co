@@ -1,6 +1,11 @@
 import { AxiosInstance, AxiosInstanceNoAuth } from "@/lib/axios";
 import { SignInValues, SignUpValues } from "@/pages/sign-portal/schema";
-import { AuthTokens, SignUpResponse } from "@/types/auth.types";
+import {
+  AuthTokens,
+  SignUpRequest,
+  SignUpRequestValues,
+  SignUpResponse,
+} from "@/types/auth.types";
 import { User } from "@/types/user.types";
 import { OnboardingValues } from "@/validation/schema";
 
@@ -13,8 +18,8 @@ export const signIn = async (data: SignInValues) => {
 };
 
 // 👤 Get user info
-export const getUser = () => {
-  return AxiosInstance.get<User>("/api/v1/auth/me");
+export const getUser = async () => {
+  return await AxiosInstance.get<User>("/api/v1/auth/me");
 };
 
 // 🔁 Refresh tokens using refreshToken in request body
@@ -23,12 +28,10 @@ export const refreshSession = async (refreshToken: string) => {
     await AxiosInstance.post<AuthTokens>("/api/v1/auth/refresh", {
       refreshToken,
     })
-  ).data;
+  )?.data;
 };
 // 🔐 Sign-UP
-type SignUpParam = Omit<SignUpValues, "repassword"> & OnboardingValues;
 
-export const signUp = async (data: SignUpParam) => {
-  return (await AxiosInstance.post<SignUpResponse>("/api/v1/auth/signup", data))
-    ?.data;
+export const signUp = async (data: SignUpRequestValues) => {
+  return await AxiosInstance.post<SignUpResponse>("/api/v1/auth/signup", data);
 };

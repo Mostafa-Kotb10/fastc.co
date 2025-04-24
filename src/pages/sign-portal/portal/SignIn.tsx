@@ -16,6 +16,7 @@ import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { useSignInV2 } from "@/services/auth/mutations";
 
 import { LoaderCircle } from "lucide-react";
+import { Spinner } from "@/components/Spinner";
 
 const SignIn = () => {
   const {signIn, isPending } = useSignInV2();
@@ -111,7 +112,7 @@ const SignIn = () => {
               disabled={isPending}
             >
               {isPending ? (
-                <LoaderCircle className="size-4 animate-spin" />
+                <Spinner />
               ) : (
                 <span>Sign In</span>
               )}

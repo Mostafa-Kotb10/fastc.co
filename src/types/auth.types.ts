@@ -9,7 +9,18 @@ export interface AuthTokens {
   refreshTokenExpiration: number;
 }
 
-export interface SignUpResponse {
-  user: User;
-  jwt: AuthTokens;
+export interface SignUpRequestValues {
+  username: string;
+  email: string;
+  password: string;
+  managedUser?: boolean;
 }
+
+type ErrorResponse = {
+  error: string;
+  message: string;
+  timestamp: string;
+  status: number;
+};
+
+export type SignUpResponse = { user: User; jwt: AuthTokens } | ErrorResponse;

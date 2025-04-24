@@ -8,6 +8,7 @@ import { SignInValues, SignUpValues } from "@/pages/sign-portal/schema";
 import useAuthV2 from "@/hooks/useAuthV2";
 import { OnboardingValues } from "@/validation/schema";
 import { toast } from "sonner";
+import { SignUpRequestValues } from "@/types/auth.types";
 
 // export const useSignIn = () => {
 //   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export const useSignInV2 = () => {
       console.log("Login Success");
       setTokens(data);
       setItem(data);
-      navigate("/dashboard");
+      navigate("/pick-pharmacy");
     },
     onError: () => {
       console.error("Sign-in failed.");
@@ -115,24 +116,25 @@ export const useSignUp = () => {
   // const { setTokens } = useAuthV2();
   // const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: (data: SignUpParam) => {
-      console.log("Sending to /signup:", data);
-      return signUp(data);
-    },
+  const { mutate, isPending, error } = useMutation({
+    mutationFn:  (data: SignUpRequestValues) => signUp(data),
     onSuccess: (data) => {
-      console.log("Success", data);
-      toast.success("Account created Successully")
+      console.log("response-data: ", data)
     },
     onError: (error) => {
       console.error("Sign-up failed:", error);
-      toast.error("An error occured", {
-        description: error.message
+      
+      // Safely access error data
+      const errorMessage = error?.data?.message || error?.message || "Something went wrong";
+      
+      toast.error("An error occurred", {
+        description: errorMessage,
       });
-    },
+    }
   });
   return {
-    ...mutation,
-    signUp: mutation.mutate,
+    signUp: mutate,
+    isSigningIn: isPending,
+    error,
   };
 };

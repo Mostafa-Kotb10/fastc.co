@@ -15,8 +15,11 @@ import { FcGoogle } from "react-icons/fc";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { useSignUpStore } from "@/store/signUpStore";
 import { useNavigate } from "react-router-dom";
+import { useSignUp } from "@/services/auth/mutations";
+import { Spinner } from "@/components/Spinner";
 
 const SignUp = () => {
+  const { signUp, isSigningIn } = useSignUp();
   const { setData } = useSignUpStore();
   const form = useForm<SignUpValues>({
     mode: "onChange",
@@ -33,10 +36,9 @@ const SignUp = () => {
 
   const { setPortalParam } = useSignPortalContext();
 
-  const onSubmit = (data: SignUpValues) => {
+  const onSubmit = async (data: SignUpValues) => {
     const { repassword, ...formData } = data;
-    setData(formData);
-    navigate("/onboarding");
+    signUp(formData)
   };
 
   return (
@@ -109,8 +111,13 @@ const SignUp = () => {
           <Button
             type="submit"
             className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-800"
+            disabled={isSigningIn}
           >
-            <span>Sign Up</span>
+            {isSigningIn ? (
+              <Spinner />
+            ) : (
+              <span>Sign In</span>
+            )}
           </Button>
 
           <div className="space-y-0.5 text-center">

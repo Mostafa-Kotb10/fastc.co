@@ -9,6 +9,7 @@ import Sales from "./dashboard/sales/Sales";
 import Onboarding from "./sign-portal/configuration/onboarding";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RequireSignUp from "@/components/auth/RequireSignUp";
+import PickPharmacy from "@/pages/pick-pharmacy/PickPharmacy";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
           </RequireSignUp>
         ),
       },
+      {
+        path: "pick-pharmacy",
+        element: <PickPharmacy />
+      }
     ],
   },
 ]);
