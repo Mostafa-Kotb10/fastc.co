@@ -1,17 +1,23 @@
-import { useGetUserPharmacy } from "@/services/pharmacy/queries";
+import { useGetUserPharmacies } from "@/services/pharmacy/queries";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+
 import onboardingSrc from "@/assets/images/onboarding.png";
 import { Spinner } from "../../components/Spinner";
-import CreatePharmacyForm from "./CreatePharmacyDialog";
 import CreatePharmacyDialog from "./CreatePharmacyDialog";
+import { format } from "date-fns";
+import { Pharmacy } from "@/types/pharmacy.types";
+import { useNavigate } from "react-router-dom";
 
 const PickPharmacy = () => {
-  const { data: pharmacies, isPending } = useGetUserPharmacy();
+  const { data: pharmacies, isPending } = useGetUserPharmacies();
+  const navigate = useNavigate();
+
+  
   return (
     <div className="relative grid h-screen place-content-center">
       <div className="absolute inset-0 -z-10">
@@ -32,17 +38,42 @@ const PickPharmacy = () => {
               <div className="flex h-full items-center justify-center">
                 <Spinner size={7} />
               </div>
-            ) : pharmacies && pharmacies.name ? (
-              <p>{pharmacies.name}</p>
+            ) : pharmacies?.length > 0 ? (
+              pharmacies.map((pharmacy) => (
+                <PharmacyItem key={pharmacy.id} pharmacy={pharmacy} />
+              ))
             ) : (
               <>
-                <p>No pharmacies found</p>
-                <CreatePharmacyDialog />
+                <div className="flex size-full items-center justify-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <CreatePharmacyDialog />
+                    <p>No pharmacies found</p>
+                  </div>
+                </div>
               </>
             )}
           </CardContent>
         </Card>
       </main>
+    </div>
+  );
+};
+
+export const PharmacyItem = ({ pharmacy }: { pharmacy: Pharmacy }) => {
+  const navigate = useNavigate();
+
+  return (
+    <div
+      className="mt-2 flex cursor-pointer justify-between rounded-sm border px-2 py-3 duration-300 hover:border-green-400"
+      onClick={() => navigate(`/dashboard/${pharmacy.id}/`)}
+    >
+      <div className="flex flex-col">
+        <span className="font-semibold">{pharmacy.name || "Pharmacy 1"}</span>
+        <span className="text-sm text-gray-500">{pharmacy.address}</span>
+      </div>
+      <span className="text-sm">
+        {format(new Date(pharmacy.createdAt ?? new Date()), "MMM, d")}
+      </span>
     </div>
   );
 };

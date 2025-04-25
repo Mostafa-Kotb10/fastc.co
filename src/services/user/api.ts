@@ -11,6 +11,6 @@ export const getUser = () => {
   return AxiosInstance.get<User>("/api/v1/auth/me");
 };
 
-export const getUserPharmacy = async () => {
-  return (await AxiosInstance.get<Pharmacy>(END_POINTS.getPharmacy)).data;
+export const getUserPharmacies = async () => {
+  return (await AxiosInstance.get<Pharmacy[]>(END_POINTS.getPharmacy)).data;
 };

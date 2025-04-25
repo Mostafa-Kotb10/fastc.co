@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard",
+        path: "/dashboard/:pharmacyId/",
         element: (
           <ProtectedRoute>
             <Dashboard />
@@ -55,8 +55,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "pick-pharmacy",
-        element: <PickPharmacy />
-      }
+        element: (
+          <ProtectedRoute>
+            <PickPharmacy />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
