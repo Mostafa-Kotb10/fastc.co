@@ -11,7 +11,7 @@ interface LogoProps {
 
 const Logo = ({ width, height, className, type = "colored" }: LogoProps) => {
   return (
-    <div className="">
+    <div>
       <img
         src={type === "colored" ? logo : logoBlack}
         width={width}

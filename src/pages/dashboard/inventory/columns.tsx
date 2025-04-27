@@ -24,20 +24,25 @@ import { cn } from "@/lib/utils";
 
 export const columns: ColumnDef<InventoryItem>[] = [
   {
-    header: "ID",
-    accessorKey: "drugId",
+    header: "id",
+    accessorKey: "drug.id",
   },
   {
-    header: "Drug Name",
-    accessorKey: "drugName",
+    header: "name",
+    accessorKey: "drug.name",
+    cell: (
+      {cell}
+    ) => (
+      <div className="max-w-sm">
+        <span className="">
+        {cell.getValue() as string}
+        </span>
+      </div>
+    )
   },
   {
-    header: "Type",
-    accessorKey: "drugForm",
-  },
-  {
-    header: "Quantity",
-    accessorKey: "quantity",
+    header: "form",
+    accessorKey: "drug.form",
   },
   {
     header: ({ column }) => sortedHeader({ column, title: "Price" }),
@@ -53,19 +58,6 @@ export const columns: ColumnDef<InventoryItem>[] = [
     },
   },
   {
-    header: ({ column }) => sortedHeader({ column, title: "Cost" }),
-    accessorKey: "cost",
-    cell: ({ cell }) => (
-      <div className="space-x-0.5">
-        <span>{cell.getValue() as number}</span>
-        <span>$</span>
-      </div>
-    ),
-    meta: {
-      toggleLabel: "Cost",
-    },
-  },
-  {
     header: "Expiry Date",
     accessorKey: "expiryDate",
     cell: ({ row }) => {
@@ -75,41 +67,8 @@ export const columns: ColumnDef<InventoryItem>[] = [
     },
   },
   {
-    id: "actions",
-    cell: ({ row }) => {
-      const drug = row.original;
-      const drugId = drug.drugId;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="size-8 p-0">
-              <MoreHorizontal className="size-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                navigator.clipboard.writeText(drugId);
-              }}
-            >
-              <ClipboardCopy className="mr-2 size-4" />
-              Copy drug ID
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Pencil className="mr-2 size-4" />
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Trash2 className="mr-2 size-4 text-red-500" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    header: "stock",
+    accessorKey: "stock"
   },
 ];
 

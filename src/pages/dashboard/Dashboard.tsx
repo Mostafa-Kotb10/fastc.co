@@ -2,9 +2,6 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import DashbordBar from "./header/DashbordBar";
 import DebugTools from "@/components/DebugTools";
-import Counter from "@/components/Counter";
-
-
 
 const Dashboard = () => {
   return (
@@ -14,8 +11,7 @@ const Dashboard = () => {
       </div>
       <DashbordBar />
       <main className="mx-auto min-h-screen max-w-7xl px-20 pt-3 md:px-18">
-        <DebugTools />
-        <Counter />
+        {/* <DebugTools /> */}
         <Outlet />
       </main>
     </div>

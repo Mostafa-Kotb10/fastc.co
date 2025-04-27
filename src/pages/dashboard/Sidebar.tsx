@@ -54,6 +54,7 @@ const Option = ({ title, path, Icon }: OptionProps) => {
   return (
     <Link to={path}>
       <motion.button
+        layout // New
         className={cn(
           "group relative flex h-10 w-full cursor-pointer items-center transition-colors hover:bg-white",
         )}
@@ -119,9 +120,22 @@ const TitleSection = () => {
               delay: 0.1,
             }}
           >
-            <Link to="/">
-              <Logo className="h-10" />
-            </Link>
+            <motion.div
+              layout
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              transition={{
+                delay: 0.1,
+              }}
+            >
+              <Link to="/">
+                <Logo className="h-10" />
+              </Link>
+            </motion.div>
           </motion.div>
         )}
         <motion.div layout className="grid size-10 place-content-center">
