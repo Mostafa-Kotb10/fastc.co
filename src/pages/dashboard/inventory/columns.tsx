@@ -1,4 +1,4 @@
-import { Column, ColumnDef, FilterFn } from "@tanstack/react-table";
+import { ColumnDef, FilterFn } from "@tanstack/react-table";
 
 import {
   DropdownMenu,
@@ -18,9 +18,8 @@ import {
   Trash2,
   MoreHorizontal,
   Pencil,
-  ArrowUpDown,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { sortedHeader } from "@/lib/utils";
 
 export const columns: ColumnDef<InventoryItem>[] = [
   {
@@ -72,34 +71,10 @@ export const columns: ColumnDef<InventoryItem>[] = [
   },
 ];
 
-function sortedHeader<TData>({
-  column,
-  title,
-}: {
-  column: Column<TData>;
-  title: string;
-}) {
-  const isSorted = column.getIsSorted() === "asc";
 
-  return (
-    <div
-      aria-label="Sort"
-      role="button"
-      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      className={cn(
-        "inline-flex cursor-pointer items-center",
-        isSorted && "text-emerald-500 hover:text-emerald-500",
-      )}
-    >
-      <span>{title}</span>
-      <ArrowUpDown className="ml-2 size-4" />
-    </div>
-  );
-}
 
 export const inventoryStatusFilter: FilterFn<InventoryItemTest> = (
   row,
-  columnId,
   filterValue,
 ) => {
   const quantity = row.original.quantity;

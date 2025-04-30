@@ -4,7 +4,7 @@ export interface User {
     username: string;
     email: string;
     phone: string;
-    role: 'OWNER' | 'ADMIN' | 'USER';
+    role: 'OWNER' | 'ADMIN' | 'USER' | string;
     fbUser: boolean;
     managedUser: boolean;
     createdAt: string;

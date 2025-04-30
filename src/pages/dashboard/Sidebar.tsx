@@ -16,6 +16,7 @@ const Sidebar = () => {
   );
 };
 
+
 const SidebarContainer = () => {
   const { isOpen, setIsOpen } = useSidebarContext();
 
@@ -74,7 +75,7 @@ const Option = ({ title, path, Icon }: OptionProps) => {
             isActive && "text-black",
           )}
         >
-          <Icon className="" />
+          <Icon />
         </motion.div>
         {isOpen && (
           <motion.span

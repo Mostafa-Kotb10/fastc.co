@@ -86,7 +86,7 @@ export const SelectFilter = ({ filters, label }: SelectFilterProps) => {
         <SelectGroup>
           <SelectLabel>{label}</SelectLabel>
           {filters?.map((filter) => (
-            <SelectItem value={filter.value}>{filter.name}</SelectItem>
+            <SelectItem key={filter.name} value={filter.value}>{filter.name}</SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>

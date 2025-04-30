@@ -1,6 +1,8 @@
+import { CreateShiftComponent } from "@/components/CreateShiftComponent";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -32,11 +34,16 @@ const CreatePharmacyDialog = () => {
     mode: "onChange",
     defaultValues: {
       name: "",
-      address: "",
+      address: "", 
       isBranch: false,
       expirayThreshold: 30,
     },
   });
+
+  const onSubmit = (data) => {
+    console.log("Pharmacy Data", data);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -51,13 +58,13 @@ const CreatePharmacyDialog = () => {
         </DialogHeader>
         <Separator />
         <Form {...form}>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pharmacy Name</FormLabel>
+                  <FormLabel>Pharmacy Name*</FormLabel>
                   <FormControl>
                     <Input
                       className="rounded-sm"
@@ -126,12 +133,16 @@ const CreatePharmacyDialog = () => {
                 </FormItem>
               )}
             />
+            <Separator />
+            <CreateShiftComponent />
+            <Separator />
+            <DialogFooter>
+              <DialogClose disabled={!form.formState.isValid} asChild>
+                <Button type="submit">create</Button>
+              </DialogClose>
+            </DialogFooter>
           </form>
         </Form>
-        <Separator />
-        <DialogFooter>
-          Footer
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

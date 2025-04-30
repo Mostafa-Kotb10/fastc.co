@@ -5,12 +5,14 @@ import SignPortal from "./sign-portal/portal/SignPortal";
 import { SignPortalProvider } from "../context/SignPortalContext";
 import Dashboard from "./dashboard/Dashboard";
 import Inventory from "./dashboard/inventory/Inventory";
-import Sales from "./dashboard/sales/Sales";
 import Onboarding from "./sign-portal/configuration/onboarding";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RequireSignUp from "@/components/auth/RequireSignUp";
 import PickPharmacy from "@/pages/pick-pharmacy/PickPharmacy";
 import PharmacyPage from "./dashboard/pharmacy/PharmacyPage";
+import ExpiryPage from "./dashboard/expiry-page/ExpiryPage";
+import SalesPage from "./dashboard/sales/SalesPage";
+import EmployeesPage from "./dashboard/employees/EmployeesPage";
 
 export const router = createBrowserRouter([
   {
@@ -42,12 +44,20 @@ export const router = createBrowserRouter([
           },
           {
             path: "sales",
-            element: <Sales />,
+            element: <SalesPage />,
           },
           {
             path: "pharmacy",
             element: <PharmacyPage />,
           },
+          {
+            path: "expiry-warning",
+            element: <ExpiryPage />,
+          },
+          {
+            path: "employees",
+            element: <EmployeesPage />
+          }
         ],
       },
       {
@@ -66,6 +76,7 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
     ],
   },
 ]);

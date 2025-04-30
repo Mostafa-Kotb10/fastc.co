@@ -14,12 +14,8 @@ const Inventory = () => {
   const [params] = useSearchParams();
 
   const search = params.get("search") || "";
-  const filter = params.get("filter") as
-    | "AVAILABLE"
-    | "SHORTAGE"
-    | "UNAVAILABLE_SHORTAGE"
-    | "UNAVAILABLE"
-    | undefined;
+  const filter = params.get("filter") || "AVAILABLE"
+  
 
   const page = Number(params.get("page")) || 0;
   const size = Number(params.get("size")) || 75;

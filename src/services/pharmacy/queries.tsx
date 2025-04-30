@@ -12,7 +12,7 @@ export const useGetUserPharmacies = () => {
 interface UseSearchPharmacyDrugsProps {
   pharmacyId: number;
   query?: string;
-  filter?: "AVAILABLE" | "SHORTAGE" | "UNAVAILABLE_SHORTAGE" | "UNAVAILABLE";
+  filter?: string;
   page?: number;
   size?: number;
 }

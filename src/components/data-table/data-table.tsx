@@ -94,9 +94,9 @@ export function DataTable<TData, TValue>({
 
           <TableBody>
             {isLoading ? (
-              <TableRow>
-                <TableCell>
-                  <Spinner containerStyles="py-2 flex items-center justify-center mbg-red-400" />
+              <TableRow className="min-w-full bg-red-300">
+                <TableCell className="bg-red-300">
+                  <Spinner containerStyles="py-2 flex items-center justify-center" />
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -127,6 +127,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
+          className="select-none"
         >
           Previous
         </Button>
@@ -138,6 +139,7 @@ export function DataTable<TData, TValue>({
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
+          className="select-none"
         >
           Next
         </Button>

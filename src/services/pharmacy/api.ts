@@ -11,7 +11,7 @@ export const getPharmacyById = async (pharmacyId: number) => {
 interface SearchParams {
   pharmacyId: number;
   query?: string;
-  filter?: "AVAILABLE" | "SHORTAGE" | "UNAVAILABLE_SHORTAGE" | "UNAVAILABLE";
+  filter?: string;
   page?: number;
   size?: number;
 }
@@ -30,6 +30,8 @@ export const getSearchPharmacy = async ({
     size,
   };
 
+  console.log(params);
+
   const { data } = await AxiosInstance.get(
     `${END_POINTS.base}/${pharmacyId}/drugs/search`,
     { params },
@@ -37,3 +39,38 @@ export const getSearchPharmacy = async ({
 
   return data;
 };
+
+export const getPharmacyEmployees = async ({
+  pharmacyId,
+  query,
+  filter,
+  page = 0,
+  size = 75,
+}: SearchParams) => {
+  const params = {
+    ...(query ? { search: query } : {}),
+    ...(filter ? { filter } : {}),
+    page,
+    size,
+  };
+
+  console.log(params);
+
+  const { data } = await AxiosInstance.get(
+    `${END_POINTS.base}/${pharmacyId}/employees`,
+    { params },
+  );
+
+  return data;
+};
+
+export const deleteEmployee = async (
+  pharmacyId: number,
+  employeeId: number,
+) => {
+  return (await AxiosInstance.delete(
+    `${END_POINTS.base}/${pharmacyId}/employees?id=${pharmacyId}&employee_id=${employeeId}`,
+  ))?.data;
+};
+
+// I have two options, Assign A shift, Change Data.

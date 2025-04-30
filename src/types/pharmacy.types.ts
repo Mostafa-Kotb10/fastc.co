@@ -1,3 +1,4 @@
+import { Drug } from "./drug.types";
 import { User } from "./user.types";
 
 export interface Pharmacy {
@@ -26,7 +27,18 @@ export interface Shift {
 
 export interface TimeStructure {
   hour: number;
-  minute: number;
-  second: number;
-  nano: number;
+  minute?: number;
+  second?: number;
+  nano?: number;
+}
+
+export interface PharmacyDrug {
+  drug: Drug;
+  pharmacy: Pharmacy;
+  addedBy: User;
+  stock: number;
+  price: number;
+  expiryDate: string; // "YYYY-MM-DD"
+  createdAt: string;
+  updatedAt: string;
 }

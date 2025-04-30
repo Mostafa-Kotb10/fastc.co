@@ -1,10 +1,5 @@
-
 const Sales = () => {
-  return (
-    <>
-      <h2 className="text-2xl font-bold">Sales</h2>
-    </>
-  )
-}
+  return <div className="w-full bg-red-300">Sales</div>;
+};
 
-export default Sales
+export default Sales;
