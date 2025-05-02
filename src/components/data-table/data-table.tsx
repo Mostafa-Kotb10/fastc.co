@@ -94,9 +94,14 @@ export function DataTable<TData, TValue>({
 
           <TableBody>
             {isLoading ? (
-              <TableRow className="min-w-full bg-red-300">
-                <TableCell className="bg-red-300">
-                  <Spinner containerStyles="py-2 flex items-center justify-center" />
+              <TableRow className="h-9">
+                <TableCell
+                  colSpan={table.getVisibleLeafColumns().length}
+                  className="p-0"
+                >
+                  <div className="flex h-full w-full items-center justify-center">
+                    <Spinner />
+                  </div>
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (

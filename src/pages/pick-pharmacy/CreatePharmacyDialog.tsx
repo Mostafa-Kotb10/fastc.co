@@ -1,5 +1,3 @@
-import { CreateShiftComponent } from "@/components/CreateShiftComponent";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -21,27 +19,48 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
 import {
   createPharmacySchema,
   CreatePharmacyValues,
-} from "@/validation/create-pharmacy-schema";
+} from "@/validation/pharmacy-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useCreatePharmacy } from "@/services/pharmacy/mutations";
+import { FullScreenSpinner } from "@/components/Spinner";
 
-const CreatePharmacyDialog = () => {
+const CreatePharmacyDialog = ({
+  onlyBranch = false,
+  pharmacyId,
+}: {
+  onlyBranch: boolean;
+  pharmacyId?: number;
+}) => {
+  const { createPharmacy, isLoadingPharmacy } = useCreatePharmacy();
+
+  console.log(pharmacyId);
+
   const form = useForm<CreatePharmacyValues>({
     resolver: zodResolver(createPharmacySchema),
     mode: "onChange",
     defaultValues: {
       name: "",
-      address: "", 
-      isBranch: false,
-      expirayThreshold: 30,
+      address: "",
+      isBranch: true,
+      expiryThreshold: 30,
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Pharmacy Data", data);
+  if (!pharmacyId) return <FullScreenSpinner />
+
+  const onSubmit = (data: CreatePharmacyValues) => {
+    const payload = {
+      ...data,
+      ...(onlyBranch ? { mainBranchId: pharmacyId } : {}),
+    };
+
+    console.log("Pharmacy Data", payload);
+    createPharmacy(payload);
   };
 
   return (
@@ -108,15 +127,38 @@ const CreatePharmacyDialog = () => {
                       className="rounded-sm"
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      disabled={onlyBranch}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
 
+            {onlyBranch && (
+              <FormField
+                control={form.control}
+                name="mainBranchId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Main Branch ID</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="rounded-sm"
+                        placeholder="Enter Main Branch ID"
+                        {...field}
+                        value={pharmacyId}
+                        disabled
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
-              name="expirayThreshold"
+              name="expiryThreshold"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Expiry Threshold (days)</FormLabel>
@@ -133,11 +175,11 @@ const CreatePharmacyDialog = () => {
                 </FormItem>
               )}
             />
-            <Separator />
-            <CreateShiftComponent />
-            <Separator />
             <DialogFooter>
-              <DialogClose disabled={!form.formState.isValid} asChild>
+              <DialogClose
+                disabled={!form.formState.isValid || isLoadingPharmacy}
+                asChild
+              >
                 <Button type="submit">create</Button>
               </DialogClose>
             </DialogFooter>

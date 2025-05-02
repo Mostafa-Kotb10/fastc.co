@@ -11,10 +11,12 @@ const ExpiryPage = () => {
   const { pharmacyId } = useParams();
   const [searchParams] = useSearchParams();
 
+  const query = searchParams.get("search") || "";
   const filter = searchParams.get("filter") || "EXPIRED";
 
   const { data: drugs, isPending: isLoadingDrugs } = useSearchPharmacyDrugs({
     pharmacyId: Number(pharmacyId),
+    query,
     filter,
     page: 0,
     size: 75,

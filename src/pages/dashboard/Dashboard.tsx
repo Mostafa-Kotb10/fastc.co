@@ -10,7 +10,7 @@ const Dashboard = () => {
         <Sidebar />
       </div>
       <DashbordBar />
-      <main className="mx-auto min-h-screen max-w-7xl px-20 pt-3 md:px-18">
+      <main className="mx-auto min-h-screen max-w-7xl px-20 pt-3 md:px-18 py-20">
         {/* <DebugTools /> */}
         <Outlet />
       </main>

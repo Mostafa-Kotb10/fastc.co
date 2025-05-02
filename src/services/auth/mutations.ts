@@ -12,31 +12,6 @@ import { SignUpRequestValues } from "@/types/auth.types";
 import axios from "axios";
 import { useSignInStore } from "@/store/signInStore";
 
-// export const useSignIn = () => {
-//   const navigate = useNavigate();
-//   const { setItem } = useLocalStorage("tokens");
-//   const { setTokens } = useAuthV2();
-
-//   const mutation = useMutation({
-//     mutationFn: (data: SignInValues) => signIn(data),
-//     onSuccess: async (response) => {
-//       const tokens = response.data;
-//       setTokens(tokens);
-//       setItem(tokens);
-//       navigate("/dashboard");
-//     },
-//     onError: () => {
-//       console.error("Sign-in failed.");
-//     },
-//   });
-
-//   return {
-//     ...mutation,
-//     signIn: mutation.mutate,
-//     tokens: mutation.data?.data,
-//   };
-// };
-
 export const useSignOut = () => {
   const { removeItem } = useLocalStorage("tokens");
   const navigate = useNavigate();

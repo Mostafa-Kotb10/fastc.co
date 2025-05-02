@@ -9,10 +9,8 @@ import {
 import onboardingSrc from "@/assets/images/onboarding.png";
 import { Spinner } from "../../components/Spinner";
 import CreatePharmacyDialog from "./CreatePharmacyDialog";
-import { format } from "date-fns";
 import { Pharmacy } from "@/types/pharmacy.types";
-import { useNavigate, useParams } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import  PharmacyItem  from "../dashboard/pharmacy/PharmacyItem";
 
 const PickPharmacy = () => {
   const { data: pharmacies, isPending } = useGetUserPharmacies();
@@ -45,7 +43,7 @@ const PickPharmacy = () => {
               <>
                 <div className="flex size-full items-center justify-center">
                   <div className="flex flex-col items-center gap-1">
-                    <CreatePharmacyDialog />
+                    <CreatePharmacyDialog onlyBranch={false}  />
                     <p>No pharmacies found</p>
                   </div>
                 </div>
@@ -54,38 +52,6 @@ const PickPharmacy = () => {
           </CardContent>
         </Card>
       </main>
-    </div>
-  );
-};
-
-export const PharmacyItem = ({ pharmacy }: { pharmacy: Pharmacy }) => {
-  const { pharmacyId } = useParams<{ pharmacyId: string }>();
-
-  const isActive = Number(pharmacyId) === pharmacy.id;
-
-  const navigate = useNavigate();
-
-  return (
-    <div
-      className={cn(
-        "mt-2 flex cursor-pointer items-center justify-between rounded-md border border-transparent bg-white/70 px-4 py-3 shadow-sm transition-all hover:border-emerald-400 hover:bg-white",
-        isActive && "border-emerald-400 hover:border-emerald-400",
-      )}
-      onClick={() =>
-        navigate(`/dashboard/${pharmacy.id}/`, {
-          replace: true,
-        })
-      }
-    >
-      <div className="flex flex-col">
-        <span className="text-base font-semibold text-gray-800">
-          {pharmacy.name || "Pharmacy 1"}
-        </span>
-        <span className="text-sm text-gray-500">{pharmacy.address}</span>
-      </div>
-      <span className="text-sm text-gray-400">
-        {format(new Date(pharmacy.createdAt ?? new Date()), "MMM d")}
-      </span>
     </div>
   );
 };

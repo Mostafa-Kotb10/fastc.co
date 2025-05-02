@@ -1,4 +1,5 @@
 import { Drug } from "./drug.types";
+import { BaseEmployee } from "./employee.types";
 import { User } from "./user.types";
 
 export interface Pharmacy {
@@ -20,16 +21,9 @@ export interface Pharmacy {
 
 export interface Shift {
   id: number;
-  startTime: TimeStructure;
-  endTime: TimeStructure;
+  startTime: string;
+  endTime: string;
   name: string;
-}
-
-export interface TimeStructure {
-  hour: number;
-  minute?: number;
-  second?: number;
-  nano?: number;
 }
 
 export interface PharmacyDrug {
@@ -42,3 +36,8 @@ export interface PharmacyDrug {
   createdAt: string;
   updatedAt: string;
 }
+
+export type PharmacyEmployee = Omit<BaseEmployee, "id"> & {
+  user: User;
+  pharmacy: Pharmacy;
+};
