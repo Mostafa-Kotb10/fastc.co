@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePharmacyShifts } from "@/services/pharmacy/queries";
-import ShiftItem from "../pharmacy/ShiftItem";
+import ShiftItem, { ShiftItemWithContext } from "../pharmacy/ShiftItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDeleteShift } from "@/services/pharmacy/mutations";
@@ -21,7 +21,13 @@ const ShiftsCard = () => {
           {shifts && shifts.length > 0 ? (
             <ul className="space-y-2">
               {shifts.map((shift) => (
-                <ShiftItem
+                //   <ShiftItem
+                //   key={shift.id}
+                //   shift={shift}
+                //   onDelete={() => deleteShift({ shiftId: shift.id })}
+                //   isLoading={isDeletingShift}
+                // />
+                <ShiftItemWithContext
                   key={shift.id}
                   shift={shift}
                   onDelete={() => deleteShift({ shiftId: shift.id })}

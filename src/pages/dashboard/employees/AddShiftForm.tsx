@@ -15,7 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TimePickerDemo } from "@/components/time-picker-demo";
 import { useCreateShift } from "@/services/pharmacy/mutations";
 import { useParams } from "react-router-dom";
-import { Separator } from "@/components/ui/separator";
 
 const midnight = new Date();
 midnight.setHours(0, 0, 0, 0);
@@ -78,7 +77,7 @@ const AddShiftForm = () => {
             />
 
             {/* Start and End Time */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 ">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormField
                 control={form.control}
                 name="startTime"

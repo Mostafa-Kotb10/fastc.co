@@ -1,6 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import CreatePharmacyDialog from "@/pages/pick-pharmacy/CreatePharmacyDialog";
-import PharmacyItem from "@/pages/dashboard/pharmacy/PharmacyItem";
+import PharmacyItem, {
+  PharmacyItemWithMenu,
+} from "@/pages/dashboard/pharmacy/PharmacyItem";
 import { useGetUserPharmacies } from "@/services/pharmacy/queries";
 import { useParams } from "react-router-dom";
 import { useDeletePharmacy } from "@/services/pharmacy/mutations";
@@ -23,7 +25,7 @@ const PharmacyPage = () => {
           ) : (
             <ul className="space-y-4">
               {pharmacies?.map((pharmacy) => (
-                <PharmacyItem
+                <PharmacyItemWithMenu
                   key={pharmacy.id}
                   pharmacy={pharmacy}
                   withDialog

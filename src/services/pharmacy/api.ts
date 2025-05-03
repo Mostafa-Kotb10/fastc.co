@@ -1,6 +1,9 @@
 import { AxiosInstance } from "@/lib/axios";
 import { Pharmacy, Shift } from "@/types/pharmacy.types";
-import { CreatePharmacyValues } from "@/validation/pharmacy-schema";
+import {
+  CreatePharmacyValues,
+  EditPharmacyValues,
+} from "@/validation/pharmacy-schema";
 
 const END_POINTS = {
   base: "/api/v1/pharmacies",
@@ -103,6 +106,14 @@ export const createPharmacyShift = async ({
 export const createPharmacy = async (pharmacy: CreatePharmacyValues) => {
   return (await AxiosInstance.post<Pharmacy>(`${END_POINTS.base}`, pharmacy))
     .data;
+};
+
+export const editPharmacy = async (
+  editValues: EditPharmacyValues & { pharmacyId: number },
+) => {
+  return (
+    await AxiosInstance.patch<Pharmacy>(END_POINTS.base, editValues)
+  ).data;
 };
 
 export const deletePharmacy = async (pharmacyId: number) => {

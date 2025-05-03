@@ -15,18 +15,27 @@ import {
   editPharmacySchema,
   EditPharmacyValues,
 } from "@/validation/pharmacy-schema"; // adjust path
+import { useEditPharmacy } from "@/services/pharmacy/mutations";
 
 const EditPharmacyForm = ({
   defaultValues,
-  onSubmit,
+  setIsEditOpen,
 }: {
-  defaultValues: EditPharmacyValues;
+  defaultValues: EditPharmacyValues & { pharmcyId: number };
   onSubmit: (values: EditPharmacyValues) => void;
+  setIsEditOpen: (val: boolean) => void;
 }) => {
+  const {editPharmacy, isEditingPharmacy} = useEditPharmacy();
   const form = useForm<EditPharmacyValues>({
     resolver: zodResolver(editPharmacySchema),
     defaultValues,
   });
+
+  const onSubmit = (data: EditPharmacyValues) => {
+    console.log(data);
+    editPharmacy(data)
+    setIsEditOpen(false);
+  };
 
   return (
     <Form {...form}>

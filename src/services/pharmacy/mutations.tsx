@@ -1,12 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 import {
   createPharmacy as createPharmacyFun,
   createPharmacyShift,
   deletePharmacy,
   deleteShift,
+  editPharmacy,
 } from "./api";
 import { Shift } from "@/types/pharmacy.types";
-import { CreatePharmacyValues } from "@/validation/pharmacy-schema";
+import {
+  CreatePharmacyValues,
+  EditPharmacyValues,
+} from "@/validation/pharmacy-schema";
 import { toast } from "sonner";
 
 export const useCreateShift = (pharmacyId: number) => {
@@ -90,8 +95,6 @@ export const useDeletePharmacy = () => {
   };
 };
 
-import { useParams } from "react-router-dom";
-
 export const useDeleteShift = () => {
   const { pharmacyId } = useParams();
   const queryClient = useQueryClient();
@@ -120,6 +123,34 @@ export const useDeleteShift = () => {
   return {
     deleteShift: deleteShiftMutate,
     isDeletingShift,
+    error,
+  };
+};
+
+export const useEditPharmacy = () => {
+  const queryClient = useQueryClient();
+
+  const {
+    mutate: editPharmacyMutate,
+    isPending: isEditingPharmacy,
+    error,
+  } = useMutation({
+    mutationFn: (data: EditPharmacyValues & { pharmacyId: number }) =>
+      editPharmacy(data),
+    onSuccess: () => {
+      toast.success("Pharmacy updated successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["pharmacy", Number(pharmacyId)],
+      });
+    },
+    onError: () => {
+      toast.error("Failed to update pharmacy");
+    },
+  });
+
+  return {
+    editPharmacy: editPharmacyMutate,
+    isEditingPharmacy,
     error,
   };
 };
