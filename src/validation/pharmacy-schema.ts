@@ -11,9 +11,9 @@ export const createPharmacySchema = z.object({
 export type CreatePharmacyValues = z.infer<typeof createPharmacySchema>;
 
 export const editPharmacySchema = z.object({
-  pharmacyId: z.number(),
+  id: z.number(),
   name: z.string().nonempty(),
-  address: z.string().nonempty(),
+  address: z.string().nonempty() ,
   expiryThreshold: z.number().optional(),
 });
 

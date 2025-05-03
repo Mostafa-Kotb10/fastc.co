@@ -11,7 +11,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { signUpSchema, SignUpValues } from "@/validation/schema";
-import { FcGoogle } from "react-icons/fc";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { useSignUpStore } from "@/store/signUpStore";
 import { useNavigate } from "react-router-dom";
@@ -38,7 +37,7 @@ const SignUp = () => {
 
   const onSubmit = async (data: SignUpValues) => {
     const { repassword, ...formData } = data;
-    signUp(formData)
+    signUp(formData);
   };
 
   return (
@@ -113,13 +112,9 @@ const SignUp = () => {
             className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-800"
             disabled={isSigningIn}
           >
-            {isSigningIn ? (
-              <Spinner />
-            ) : (
-              <span>Sign In</span>
-            )}
+            {isSigningIn ? <Spinner /> : <span>Sign In</span>}
           </Button>
-
+          <hr className="my-3" />
           <div className="space-y-0.5 text-center">
             <span className="font-light">Already have an account?</span>
             <span
@@ -128,13 +123,6 @@ const SignUp = () => {
             >
               Login
             </span>
-          </div>
-          <hr />
-          <div className="space-y-2 text-center">
-            <span className="block">Or</span>
-            <Button className="w-full bg-gray-900 hover:bg-gray-700">
-              <FcGoogle /> Sign Up with Google
-            </Button>
           </div>
         </div>
       </form>

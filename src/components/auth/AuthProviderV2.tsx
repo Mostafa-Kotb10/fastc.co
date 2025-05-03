@@ -10,7 +10,7 @@ interface AuthContextType {
   setTokens: (data: AuthTokens | null) => void;
   isLoading: boolean; // Loading state for token refresh
   error: string | null; // Optional error state
-};
+}
 
 const AuthContextV2 = createContext<AuthContextType | null>(null);
 

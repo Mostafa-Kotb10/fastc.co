@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { IconType } from "react-icons";
 import { FiSidebar } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const Sidebar = () => {
   return (
@@ -16,19 +17,46 @@ const Sidebar = () => {
   );
 };
 
-
 const SidebarContainer = () => {
-  const { isOpen, setIsOpen } = useSidebarContext();
+  const { isOpen, setIsOpen, setActive } = useSidebarContext();
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname.split("/").pop() || "";
+    const currentMenuItem = sidebarLinks.find(
+      (link) => link.path === currentPath,
+    );
+    if (currentMenuItem) {
+      setActive(currentMenuItem.title);
+    }
+  }, [location.pathname, setActive]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
 
   return (
     <motion.nav
+      ref={sidebarRef}
       className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 h-screen shrink-0 border-r border-slate-300 bg-cyan-950 p-2"
       layout
       style={{
         width: isOpen ? "225px" : "fit-content",
       }}
-      onHoverStart={() => setIsOpen(true)}
-      onHoverEnd={() => setIsOpen(false)}
     >
       <TitleSection />
       <div className="flex w-full flex-col gap-1">
@@ -103,7 +131,7 @@ const Option = ({ title, path, Icon }: OptionProps) => {
 };
 
 const TitleSection = () => {
-  const { isOpen } = useSidebarContext();
+  const { isOpen, toggleSidebar } = useSidebarContext();
 
   return (
     <motion.div layout className="mb-3 border-b border-slate-300 pb-3">
@@ -139,7 +167,11 @@ const TitleSection = () => {
             </motion.div>
           </motion.div>
         )}
-        <motion.div layout className="grid size-10 place-content-center">
+        <motion.div
+          layout
+          className="grid size-10 place-content-center"
+          onClick={toggleSidebar}
+        >
           <FiSidebar className="size-5 text-white" />
         </motion.div>
       </div>

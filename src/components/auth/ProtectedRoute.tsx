@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!isPending && shouldRedirect) {
-      navigate("/sign-portal", { replace: true });
+      // navigate("/sign-portal", { replace: true });
     }
   }, [shouldRedirect, isPending, navigate]);
 

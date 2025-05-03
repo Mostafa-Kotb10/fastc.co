@@ -109,7 +109,7 @@ export const createPharmacy = async (pharmacy: CreatePharmacyValues) => {
 };
 
 export const editPharmacy = async (
-  editValues: EditPharmacyValues & { pharmacyId: number },
+  editValues: EditPharmacyValues & { id: number },
 ) => {
   return (
     await AxiosInstance.patch<Pharmacy>(END_POINTS.base, editValues)

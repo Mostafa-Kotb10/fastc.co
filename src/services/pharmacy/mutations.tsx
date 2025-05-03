@@ -140,10 +140,11 @@ export const useEditPharmacy = () => {
     onSuccess: () => {
       toast.success("Pharmacy updated successfully");
       queryClient.invalidateQueries({
-        queryKey: ["pharmacy", Number(pharmacyId)],
+        queryKey: ["pharmacy"],
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.log("error: ", error);
       toast.error("Failed to update pharmacy");
     },
   });

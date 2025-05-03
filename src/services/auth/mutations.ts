@@ -79,8 +79,8 @@ export const useRefreshToken = () => {
       setItem(tokens);
       return tokens;
     },
-    onError: () => {
-      console.log("Error occurred while refreshing the token");
+    onError: (error) => {
+      console.log("Error occurred while refreshing the token", error);
       setTokens(null);
       setTokens(null);
     },
@@ -102,17 +102,24 @@ export const useSignUp = () => {
     mutationFn: (data: SignUpRequestValues) => signUp(data),
     onSuccess: (data) => {
       console.log("response-data: ", data);
+      toast.success("Account created successfully!");
     },
     onError: (error) => {
       console.error("Sign-up failed:", error);
 
-      // Safely access error data
-      const errorMessage =
-        error?.data?.message || error?.message || "Something went wrong";
-
-      toast.error("An error occurred", {
-        description: errorMessage,
-      });
+      // Properly handle Axios errors
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data;
+        const errorMessage =
+          errorResponse?.message || "An error occurred during sign up";
+        toast.error("Sign up failed", {
+          description: errorMessage,
+        });
+      } else {
+        toast.error("Sign up failed", {
+          description: "An unexpected error occurred",
+        });
+      }
     },
   });
   return {

@@ -11,11 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { signInSchema, SignInValues } from "@/validation/schema";
-import { FcGoogle } from "react-icons/fc";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { useSignInV2 } from "@/services/auth/mutations";
-
-import { LoaderCircle } from "lucide-react";
 import { Spinner } from "@/components/Spinner";
 
 const SignIn = () => {
@@ -122,13 +119,7 @@ const SignIn = () => {
           </div>
 
           <div className="space-y-4 text-center">
-            <span className="block text-center">Or</span>
-            <Button
-              type="button"
-              className="flex w-full items-center gap-2 bg-gray-900 hover:bg-gray-700"
-            >
-              <FcGoogle size={20} /> Sign In with Google
-            </Button>
+        
             <span>Don't have an account? </span>
             <span
               onClick={() => setPortalParam("sign-up")}

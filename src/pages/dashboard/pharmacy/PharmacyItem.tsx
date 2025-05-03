@@ -122,12 +122,16 @@ export const PharmacyItemWithMenu = (props: PharmacyItemProps) => {
       >
         <EditPharmacyForm
           defaultValues={{
-            pharmacyId: pharmacy.id,
-            address: pharmacy?.address,
+            id: pharmacy.id,
+            address: pharmacy?.address ?? "",
             name: pharmacy.name,
             expiryThreshold: pharmacy.expiryThreshold,
+            pharmcyId: pharmacy.id,
           }}
           setIsEditOpen={setIsEditOpen}
+          onSubmit={(values) => {
+            setIsEditOpen(false);
+          }}
         />
       </ResponsiveDialogV2>
 
