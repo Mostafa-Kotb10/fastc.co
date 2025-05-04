@@ -1,66 +1,73 @@
-import { Spinner } from "@/components/Spinner";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/ui/select";
-import { useCreateEmployee } from "@/services/employees/mutations";
 import { usePharmacyShifts } from "@/services/pharmacy/queries";
+import { Employee } from "@/types/employee.types";
 import {
-  createEmployeeSchema,
-  CreateEmployeeValues,
+  editEmployeeSchema,
+  EditEmployeeValues,
 } from "@/validation/employee-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/Spinner";
+import { useEditEmployee } from "@/services/employees/mutations";
+// if you have one
 
-const CreateEmployeeForm = () => {
+interface EditEmployeeProps {
+  employee: Employee;
+  setIsOpen: (state: boolean) => void;
+}
+
+const EditEmployeeForm = ({ employee, setIsOpen }: EditEmployeeProps) => {
+  const { user, age, gender, salary, shift } = employee;
   const { shifts, isLoadingShifts } = usePharmacyShifts();
-  const {createEmployee, isCreatingEmployee} = useCreateEmployee();
-  const form = useForm<CreateEmployeeValues>({
-    resolver: zodResolver(createEmployeeSchema),
-    defaultValues: {
-      user: {
-        username: "",
-        email: "",
-        password: "",
-      },
-      age: 20,
-      gender: "male",
+  const {editEmployee, isEditingEmployee} = useEditEmployee();
 
-      salary: 0, // hidden but required
-      shiftId: 0,
+  const form = useForm<EditEmployeeValues>({
+    resolver: zodResolver(editEmployeeSchema),
+    defaultValues: {
+      username: user.username,
+      email: user.email,
+      id: user.id,
+      age,
+      gender,
+      salary,
+      shiftId: shift.id,
     },
   });
 
-  // Get PharmacyId in Hook.
-
-  // onSubmit handler
-  const onSubmit = (data: CreateEmployeeValues) => {
-    createEmployee(data);
+  const onSubmit = (values: EditEmployeeValues) => {
+    console.log("Edit values:", values);
+    // TODO: call useEditEmployeeMutation here
+    editEmployee(values)
+    setIsOpen(false);
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="user.username"
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Enter username" {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -69,30 +76,12 @@ const CreateEmployeeForm = () => {
 
         <FormField
           control={form.control}
-          name="user.email"
+          name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter email" type="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="user.password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter password"
-                  type="password"
-                  {...field}
-                />
+                <Input {...field} disabled />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,30 +102,25 @@ const CreateEmployeeForm = () => {
           )}
         />
 
-
         <FormField
           control={form.control}
           name="gender"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Gender</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1"
+                  value={field.value}
+                  className="flex space-x-4"
                 >
-                  <FormItem className="flex items-center space-y-0 space-x-3">
-                    <FormControl>
-                      <RadioGroupItem value="male" />
-                    </FormControl>
-                    <FormLabel className="font-normal">male</FormLabel>
+                  <FormItem className="flex items-center space-x-2">
+                    <RadioGroupItem value="male" />
+                    <FormLabel className="font-normal">Male</FormLabel>
                   </FormItem>
-                  <FormItem className="flex items-center space-y-0 space-x-3">
-                    <FormControl>
-                      <RadioGroupItem value="female" />
-                    </FormControl>
-                    <FormLabel className="font-normal">female</FormLabel>
+                  <FormItem className="flex items-center space-x-2">
+                    <RadioGroupItem value="female" />
+                    <FormLabel className="font-normal">Female</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormControl>
@@ -167,19 +151,18 @@ const CreateEmployeeForm = () => {
               <FormLabel>Shift</FormLabel>
               <FormControl>
                 <Select
-                  onValueChange={(value) => field.onChange(Number(value))}
+                  onValueChange={(val) => field.onChange(Number(val))}
+                  defaultValue={field.value?.toString()}
                 >
                   <SelectTrigger>
-                    <span>
-                      {field.value
-                        ? shifts?.find((shift) => shift.id === field.value)
-                            ?.name
-                        : "Select a Shift"}
-                    </span>
+                    {shifts?.find((s) => s.id === field.value)?.name ||
+                      "Select Shift"}
                   </SelectTrigger>
                   <SelectContent>
                     {isLoadingShifts ? (
-                      <Spinner className="animate-spin" size={16} />
+                      <div className="p-2 text-center">
+                        <Spinner className="animate-spin" />
+                      </div>
                     ) : (
                       shifts?.map((shift) => (
                         <SelectItem key={shift.id} value={shift.id.toString()}>
@@ -195,10 +178,19 @@ const CreateEmployeeForm = () => {
           )}
         />
 
-        <Button type="submit" disabled={isCreatingEmployee} >Submit</Button>
+        <div className="flex justify-end space-x-2">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => setIsOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button type="submit">Save Changes</Button>
+        </div>
       </form>
     </Form>
   );
 };
 
-export default CreateEmployeeForm;
+export default EditEmployeeForm;

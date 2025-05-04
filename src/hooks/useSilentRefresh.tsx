@@ -11,7 +11,7 @@ export const useSilentRefresh = (
 
   useLayoutEffect(() => {
     const run = async () => {
-      const savedTokens: AuthTokens | null = getItem();
+      const savedTokens = getItem();
 
       if (!savedTokens || !savedTokens.refreshToken) {
         // No tokens, nothing to refresh

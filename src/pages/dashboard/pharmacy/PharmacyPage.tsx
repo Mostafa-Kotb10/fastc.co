@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import CreatePharmacyDialog from "@/pages/pick-pharmacy/CreatePharmacyDialog";
-import PharmacyItem, {
+import  {
   PharmacyItemWithMenu,
 } from "@/pages/dashboard/pharmacy/PharmacyItem";
 import { useGetUserPharmacies } from "@/services/pharmacy/queries";

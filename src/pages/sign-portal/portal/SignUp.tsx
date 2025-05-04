@@ -12,14 +12,11 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { signUpSchema, SignUpValues } from "@/validation/schema";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
-import { useSignUpStore } from "@/store/signUpStore";
-import { useNavigate } from "react-router-dom";
 import { useSignUp } from "@/services/auth/mutations";
 import { Spinner } from "@/components/Spinner";
 
 const SignUp = () => {
   const { signUp, isSigningIn } = useSignUp();
-  const { setData } = useSignUpStore();
   const form = useForm<SignUpValues>({
     mode: "onChange",
     resolver: zodResolver(signUpSchema),
@@ -30,8 +27,6 @@ const SignUp = () => {
       username: "",
     },
   });
-
-  const navigate = useNavigate();
 
   const { setPortalParam } = useSignPortalContext();
 

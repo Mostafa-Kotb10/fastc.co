@@ -13,9 +13,7 @@ import {
   FiUsers,
   FiShoppingCart,
   FiTrendingUp,
-  FiAlertTriangle,
   FiCalendar,
-  FiClipboard,
 } from "react-icons/fi";
 
 import {
@@ -26,7 +24,7 @@ import {
   FaDocker,
   FaChartLine,
   FaFileInvoiceDollar,
-  FaStore
+  FaStore,
 } from "react-icons/fa";
 
 import {
@@ -332,11 +330,11 @@ export const sidebarLinks: SidebarLink[] = [
     path: "expiry-warning",
     icon: FiCalendar,
   },
-    {
-      title: "Pharmacy",
-      path: "pharmacy",
-      icon: FaStore
-    }
+  {
+    title: "Pharmacy",
+    path: "pharmacy",
+    icon: FaStore,
+  },
 ];
 
 export type InventoryItem = {
@@ -836,4 +834,3 @@ export const inventoryDataTest: InventoryItemTest[] = [
     quantityShortage: 500,
   },
 ];
-

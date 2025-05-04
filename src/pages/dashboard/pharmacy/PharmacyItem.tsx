@@ -129,7 +129,7 @@ export const PharmacyItemWithMenu = (props: PharmacyItemProps) => {
             pharmcyId: pharmacy.id,
           }}
           setIsEditOpen={setIsEditOpen}
-          onSubmit={(values) => {
+          onSubmit={() => {
             setIsEditOpen(false);
           }}
         />

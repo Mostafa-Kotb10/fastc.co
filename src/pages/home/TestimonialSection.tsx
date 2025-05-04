@@ -38,28 +38,4 @@ const TestimonialSection = () => {
   );
 };
 
-const GradientButton = () => {
-  return (
-    <div className="text-sm px-2 bg-emerald-400 py-2.5 rounded-md text-white w-fit relative mx-auto">
-      <motion.div
-        className="inset-0 absolute bg-gradient-to-r from-cyan-700 to-emerald-400 rounded-md"
-        initial={{
-          opacity: 0,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-        viewport={{
-          once: true,
-        }}
-        transition={{
-          delay: 0.5,
-          duration: 0.4,
-        }}
-      />
-      <span className="relative">Seamless experiance</span>
-    </div>
-  );
-};
-
 export default TestimonialSection;

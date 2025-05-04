@@ -25,7 +25,7 @@ const EditPharmacyForm = ({
   onSubmit: (values: EditPharmacyValues) => void;
   setIsEditOpen: (val: boolean) => void;
 }) => {
-  const {editPharmacy, isEditingPharmacy} = useEditPharmacy();
+  const {editPharmacy} = useEditPharmacy();
   const form = useForm<EditPharmacyValues>({
     resolver: zodResolver(editPharmacySchema),
     defaultValues,

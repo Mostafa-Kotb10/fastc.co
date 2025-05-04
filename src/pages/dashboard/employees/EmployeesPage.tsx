@@ -5,11 +5,14 @@ import {
 import { DataTable } from "@/components/data-table/data-table";
 import { usePharmacyEmployees } from "@/services/pharmacy/queries";
 import { useParams } from "react-router-dom";
-import { columns } from "./columns";
+import { getEmployeeDataColumns } from "./columns";
 import ShiftsCard from "./ShiftsCard";
 import AddShiftForm from "./AddShiftForm";
 import { Card, CardContent } from "@/components/ui/card";
 import CreateEmployeeForm from "./CreateEmployeeForm";
+import { useCallback, useMemo, useState } from "react";
+import { Employee } from "@/types/employee.types";
+import { useDeleteEmployee } from "@/services/employees/mutations";
 
 const EmployeesPage = () => {
   const { pharmacyId } = useParams();
@@ -17,6 +20,25 @@ const EmployeesPage = () => {
   const { employees, isLoadingEmployees } = usePharmacyEmployees({
     pharmacyId: Number(pharmacyId),
   });
+
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
+
+  const { deleteEmployee } = useDeleteEmployee();
+
+  const onDelete = useCallback(
+    (employee: Employee) => deleteEmployee(employee.user.id),
+    [deleteEmployee],
+  );
+
+  const onEdit = useCallback(
+    (employee: Employee) => setSelectedEmployee(employee),
+    [],
+  );
+
+  const columns = useMemo(
+    () => getEmployeeDataColumns({ onEdit, onDelete }),
+    [onDelete, onEdit],
+  );
 
   return (
     <>

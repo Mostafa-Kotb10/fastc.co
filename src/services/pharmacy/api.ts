@@ -1,4 +1,5 @@
 import { AxiosInstance } from "@/lib/axios";
+import { Employee } from "@/types/employee.types";
 import { Pharmacy, Shift } from "@/types/pharmacy.types";
 import {
   CreatePharmacyValues,
@@ -53,7 +54,7 @@ export const getPharmacyEmployees = async ({
     size,
   };
 
-  const { data } = await AxiosInstance.get(
+  const { data } = await AxiosInstance.get<Employee[]>(
     `${END_POINTS.base}/${pharmacyId}/employees`,
     { params },
   );
@@ -111,9 +112,8 @@ export const createPharmacy = async (pharmacy: CreatePharmacyValues) => {
 export const editPharmacy = async (
   editValues: EditPharmacyValues & { id: number },
 ) => {
-  return (
-    await AxiosInstance.patch<Pharmacy>(END_POINTS.base, editValues)
-  ).data;
+  return (await AxiosInstance.patch<Pharmacy>(END_POINTS.base, editValues))
+    .data;
 };
 
 export const deletePharmacy = async (pharmacyId: number) => {

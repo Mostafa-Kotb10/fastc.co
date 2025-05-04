@@ -22,8 +22,10 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import { Spinner } from "../Spinner";
+
+const DEFAULT_REACT_TABLE_COLUMN_WIDTH = 150;
 
 interface DataTablePorps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -80,14 +82,22 @@ export function DataTable<TData, TValue>({
           <TableHeader className="bg-slate-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </TableHead>
-                ))}
+                {headerGroup.headers.map((header) => {
+                  const styles: CSSProperties =
+                    header.getSize() !== DEFAULT_REACT_TABLE_COLUMN_WIDTH
+                      ? {
+                          width: `${header.getSize()}px`,
+                        }
+                      : {};
+                  return (
+                    <TableHead style={styles} key={header.id}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             ))}
           </TableHeader>

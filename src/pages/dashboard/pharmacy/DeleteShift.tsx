@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useDeleteShift } from "@/services/pharmacy/mutations";
 import { Loader2 } from "lucide-react";
-import React from "react";
 
 interface DeleteShiftProps {
   setIsOpen: (state: boolean) => void;

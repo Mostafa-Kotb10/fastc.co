@@ -50,15 +50,6 @@ export const AuthProviderV2 = ({ children }: { children: React.ReactNode }) => {
 
   // Add the Auth header to the upcoming requests.
 
-  const syncTokens = (newTokens: AuthTokens | null) => {
-    if (newTokens) {
-      setItem(newTokens);
-    } else {
-      removeItem();
-    }
-    setTokens(newTokens);
-  };
-
   useLayoutEffect(() => {
     const authInterceptor = AxiosInstance.interceptors.request.use((config) => {
       config.withCredentials = true;

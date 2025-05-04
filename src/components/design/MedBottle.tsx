@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-const MedBottle = (props) => (
+const MedBottle = (props: any) => (
   <motion.svg
     xmlns="http://www.w3.org/2000/svg"
     width={682.667}

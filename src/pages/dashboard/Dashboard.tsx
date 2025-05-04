@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import DashbordBar from "./header/DashbordBar";
-import DebugTools from "@/components/DebugTools";
 
 const Dashboard = () => {
   return (

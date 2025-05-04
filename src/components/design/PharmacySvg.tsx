@@ -5,7 +5,7 @@ interface PharmacySvg {
     height?: number;
   }
   
-const PharmacySvg = (props) => {
+const PharmacySvg = (props: any) => {
   
   return (
     <motion.svg

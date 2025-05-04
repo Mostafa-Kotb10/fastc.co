@@ -65,9 +65,9 @@ type SelectFilterProps = {
 
 export const SelectFilter = ({ filters, label }: SelectFilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const filterParam = (searchParams.get("filter") as FilterType) || "";
+  // const filterParam = (searchParams.get("filter") as FilterType) || "";
 
-  console.log(filterParam);
+  // console.log(filterParam);
 
   const setFilter = (value: string) => {
     setSearchParams((prev) => {
@@ -86,7 +86,9 @@ export const SelectFilter = ({ filters, label }: SelectFilterProps) => {
         <SelectGroup>
           <SelectLabel>{label}</SelectLabel>
           {filters?.map((filter) => (
-            <SelectItem key={filter.name} value={filter.value}>{filter.name}</SelectItem>
+            <SelectItem key={filter.name} value={filter.value}>
+              {filter.name}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>

@@ -77,7 +77,6 @@ export const useDeletePharmacy = () => {
   } = useMutation({
     mutationFn: (pharmacyId: number) => deletePharmacy(pharmacyId),
     onSuccess: () => {
-      console.log("successfully deleted");
       toast.success("Pharmacy deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["pharmacies"],
@@ -99,8 +98,6 @@ export const useDeleteShift = () => {
   const { pharmacyId } = useParams();
   const queryClient = useQueryClient();
 
-  console.log("delete, mutate: ", pharmacyId);
-
   const {
     mutate: deleteShiftMutate,
     isPending: isDeletingShift,
@@ -109,7 +106,6 @@ export const useDeleteShift = () => {
     mutationFn: ({ shiftId }: { shiftId: number }) =>
       deleteShift(Number(pharmacyId), shiftId),
     onSuccess: () => {
-      console.log("Successfully deleted shift");
       toast.success("Shift deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["shifts", Number(pharmacyId)],
@@ -135,16 +131,14 @@ export const useEditPharmacy = () => {
     isPending: isEditingPharmacy,
     error,
   } = useMutation({
-    mutationFn: (data: EditPharmacyValues & { pharmacyId: number }) =>
-      editPharmacy(data),
+    mutationFn: (data: EditPharmacyValues) => editPharmacy(data),
     onSuccess: () => {
       toast.success("Pharmacy updated successfully");
       queryClient.invalidateQueries({
         queryKey: ["pharmacy"],
       });
     },
-    onError: (error) => {
-      console.log("error: ", error);
+    onError: () => {
       toast.error("Failed to update pharmacy");
     },
   });
