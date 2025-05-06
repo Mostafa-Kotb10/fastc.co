@@ -156,7 +156,7 @@ export const PharmacyItemWithMenu = (props: PharmacyItemProps) => {
             {format(new Date(pharmacy.createdAt ?? new Date()), "MMM d")}
           </span>
 
-          {withDialog && pharmacy.isBranch && (
+          {withDialog && (
             <DropdownMenu
               open={isDropdownOpen}
               onOpenChange={setIsDropdownOpen}
@@ -170,18 +170,20 @@ export const PharmacyItemWithMenu = (props: PharmacyItemProps) => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Options</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-red-600"
-                    onClick={() =>
-                      handleOpenDialog(() => setIsDeleteOpen(true))
-                    }
-                  >
-                    <Trash2 className="size-4 text-red-600" />
-                    <span>Delete</span>
-                  </Button>
-                </DropdownMenuItem>
+                {pharmacy.isBranch && (
+                  <DropdownMenuItem asChild>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-red-600"
+                      onClick={() =>
+                        handleOpenDialog(() => setIsDeleteOpen(true))
+                      }
+                    >
+                      <Trash2 className="size-4 text-red-600" />
+                      <span>Delete</span>
+                    </Button>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem asChild>
                   <Button
                     variant="ghost"

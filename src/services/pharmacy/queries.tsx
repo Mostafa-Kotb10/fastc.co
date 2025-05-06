@@ -21,6 +21,7 @@ interface UseSearchPharmacyProps {
   filter?: string;
   page?: number;
   size?: number;
+  status?: string;
 }
 
 export const useSearchPharmacyDrugs = ({
@@ -41,14 +42,16 @@ export const usePharmacyEmployees = ({
   pharmacyId,
   page,
   size,
+  status,
 }: UseSearchPharmacyProps) => {
+
   const {
     data: employees,
     isPending: isLoadingEmployees,
     error,
   } = useQuery({
-    queryKey: ["employees", pharmacyId],
-    queryFn: () => getPharmacyEmployees({ pharmacyId, page, size }),
+    queryKey: ["employees", pharmacyId, status, page, size],
+    queryFn: () => getPharmacyEmployees({ pharmacyId, page, size, status }),
     enabled: !!pharmacyId,
   });
 
@@ -78,7 +81,7 @@ export const usePharmacyDetails = (pharmacyId: number) => {
 
 export const usePharmacyShifts = () => {
   const { pharmacyId } = useParams();
-  
+
   const {
     data: shifts,
     isPending: isLoadingShifts,

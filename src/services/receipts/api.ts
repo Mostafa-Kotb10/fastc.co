@@ -2,7 +2,7 @@ import { AxiosInstance } from "@/lib/axios";
 
 const BASE_URL = "/api/v1/receipts";
 
-export const getReceipt = async (recieptId: number) => {
+export const getReceiptById = async (recieptId: number) => {
   return (await AxiosInstance.get(`${BASE_URL}/${recieptId}`))?.data;
 };
 

@@ -48,10 +48,17 @@ export const getPharmacyEmployees = async ({
   pharmacyId,
   page = 0,
   size = 75,
-}: SearchParams) => {
+  status,
+}: {
+  pharmacyId: number;
+  page?: number;
+  size?: number;
+  status?: string;
+}) => {
   const params = {
     page,
     size,
+    status,
   };
 
   const { data } = await AxiosInstance.get<Employee[]>(

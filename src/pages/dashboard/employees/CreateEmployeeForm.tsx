@@ -25,9 +25,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+
 const CreateEmployeeForm = () => {
   const { shifts, isLoadingShifts } = usePharmacyShifts();
-  const {createEmployee, isCreatingEmployee} = useCreateEmployee();
+  const { createEmployee, isCreatingEmployee } = useCreateEmployee();
   const form = useForm<CreateEmployeeValues>({
     resolver: zodResolver(createEmployeeSchema),
     defaultValues: {
@@ -39,7 +40,7 @@ const CreateEmployeeForm = () => {
       age: 20,
       gender: "male",
 
-      salary: 0, // hidden but required
+      salary: 0,
       shiftId: 0,
     },
   });
@@ -50,6 +51,7 @@ const CreateEmployeeForm = () => {
   const onSubmit = (data: CreateEmployeeValues) => {
     createEmployee(data);
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -113,7 +115,6 @@ const CreateEmployeeForm = () => {
           )}
         />
 
-
         <FormField
           control={form.control}
           name="gender"
@@ -124,7 +125,7 @@ const CreateEmployeeForm = () => {
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex flex-col space-y-1"
+                  className="flex space-x-2"
                 >
                   <FormItem className="flex items-center space-y-0 space-x-3">
                     <FormControl>
@@ -195,7 +196,9 @@ const CreateEmployeeForm = () => {
           )}
         />
 
-        <Button type="submit" disabled={isCreatingEmployee} >Submit</Button>
+        <Button type="submit" disabled={isCreatingEmployee}>
+          Submit
+        </Button>
       </form>
     </Form>
   );

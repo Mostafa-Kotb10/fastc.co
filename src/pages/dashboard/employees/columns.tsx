@@ -21,6 +21,10 @@ export const getEmployeeDataColumns = ({
     accessorKey: "user.username",
   },
   {
+    header: "email",
+    accessorKey: "user.email",
+  },
+  {
     header: "role",
     accessorKey: "user.role",
     cell: ({ getValue }) => {
@@ -28,6 +32,19 @@ export const getEmployeeDataColumns = ({
       return value.toLowerCase();
     },
   },
+  {
+    header: "gender",
+    accessorKey: "gender"
+  },
+  {
+    header: "age",
+    accessorKey: "age"
+  },
+  {
+    header: "shift",
+    accessorKey: "shift.name"
+  }
+  ,
   {
     id: "actions",
     cell: ({ row }) => (

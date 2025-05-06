@@ -36,9 +36,7 @@ const ShiftsCard = () => {
               ))}
             </ul>
           ) : (
-            <p className="text-muted-foreground text-center text-sm">
-              No shifts available
-            </p>
+            <p></p>
           )}
         </ScrollArea>
       </CardContent>

@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createEmployee, deleteEmployee, editEmployee } from "./api";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Employee } from "@/types/employee.types";
 
 export const useCreateEmployee = () => {
   const { pharmacyId } = useParams();
@@ -87,3 +86,5 @@ export const useEditEmployee = () => {
     error,
   };
 };
+
+

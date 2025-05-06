@@ -1,13 +1,13 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import CreatePharmacyDialog from "@/pages/pick-pharmacy/CreatePharmacyDialog";
-import  {
-  PharmacyItemWithMenu,
-} from "@/pages/dashboard/pharmacy/PharmacyItem";
+import { PharmacyItemWithMenu } from "@/pages/dashboard/pharmacy/PharmacyItem";
 import { useGetUserPharmacies } from "@/services/pharmacy/queries";
 import { useParams } from "react-router-dom";
 import { useDeletePharmacy } from "@/services/pharmacy/mutations";
 
 const PharmacyPage = () => {
+
+
   const { pharmacyId } = useParams();
   const { data: pharmacies, isPending: isLoadingPharmacy } =
     useGetUserPharmacies();

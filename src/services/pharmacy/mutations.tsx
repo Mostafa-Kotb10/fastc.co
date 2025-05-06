@@ -14,7 +14,8 @@ import {
 } from "@/validation/pharmacy-schema";
 import { toast } from "sonner";
 
-export const useCreateShift = (pharmacyId: number) => {
+export const useCreateShift = () => {
+  const { pharmacyId } = useParams();
   const queryClient = useQueryClient();
 
   const {
@@ -23,8 +24,9 @@ export const useCreateShift = (pharmacyId: number) => {
     error,
   } = useMutation({
     mutationFn: (shift: Omit<Shift, "id">) =>
-      createPharmacyShift({ pharmacyId, shift }),
+      createPharmacyShift({ pharmacyId: Number(pharmacyId), shift }),
     onSuccess: () => {
+      toast.success("Shift created Successfully");
       queryClient.invalidateQueries({
         queryKey: ["shifts", pharmacyId],
       });
@@ -108,7 +110,7 @@ export const useDeleteShift = () => {
     onSuccess: () => {
       toast.success("Shift deleted successfully");
       queryClient.invalidateQueries({
-        queryKey: ["shifts", Number(pharmacyId)],
+        queryKey: ["shifts", pharmacyId],
       });
     },
     onError: () => {

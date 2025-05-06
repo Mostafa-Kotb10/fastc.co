@@ -3,8 +3,11 @@ import {
   SelectFilter,
 } from "@/components/data-table/data-filters";
 import { DataTable } from "@/components/data-table/data-table";
-import { usePharmacyEmployees } from "@/services/pharmacy/queries";
-import { useParams } from "react-router-dom";
+import {
+  usePharmacyEmployees,
+  usePharmacyShifts,
+} from "@/services/pharmacy/queries";
+import { useParams, useSearchParams } from "react-router-dom";
 import { getEmployeeDataColumns } from "./columns";
 import ShiftsCard from "./ShiftsCard";
 import AddShiftForm from "./AddShiftForm";
@@ -13,13 +16,35 @@ import CreateEmployeeForm from "./CreateEmployeeForm";
 import { useCallback, useMemo, useState } from "react";
 import { Employee } from "@/types/employee.types";
 import { useDeleteEmployee } from "@/services/employees/mutations";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 const EmployeesPage = () => {
   const { pharmacyId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const status = searchParams.get("filter") || "";
 
   const { employees, isLoadingEmployees } = usePharmacyEmployees({
     pharmacyId: Number(pharmacyId),
+    status,
   });
+
+  const { shifts, isLoadingShifts } = usePharmacyShifts();
 
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
 
@@ -44,26 +69,36 @@ const EmployeesPage = () => {
     <>
       <h3 className="mt-6 text-3xl font-bold">Employees Page</h3>
       <div className="mt-10 space-y-10">
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <ShiftsCard />
           <AddShiftForm />
         </div>
-        <CreateEmployeeForm />
 
         <Card className="rounded-sm">
           <CardContent>
-            <div className="flex justify-between">
-              <SearchInput className="mb-3 max-w-[30rem]" />
+            <div className="mb-3 flex flex-col justify-between md:flex-row">
+              <SearchInput className="mb-3 w-full md:w-[30rem]" />
               <div className="flex gap-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button disabled={!shifts?.length}>Create Employee</Button>
+                  </DialogTrigger>
+
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Create User</DialogTitle>
+                      <DialogDescription>
+                        Fill the flowing to create a Employee.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <CreateEmployeeForm />
+                  </DialogContent>
+                </Dialog>
+
                 <SelectFilter
                   filters={[
-                    { name: "Available", value: "AVAILABLE" },
-                    { name: "Shortage", value: "SHORTAGE" },
-                    {
-                      name: "Unavailable (Shortage)",
-                      value: "UNAVAILABLE_SHORTAGE",
-                    },
-                    { name: "Unavailable", value: "UNAVAILABLE" },
+                    { name: "active", value: "ACTIVE" },
+                    { name: "inactive", value: "INACTIVE" },
                   ]}
                   label="Select Filter"
                 />
