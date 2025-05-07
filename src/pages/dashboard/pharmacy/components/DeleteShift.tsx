@@ -1,22 +1,20 @@
 import { Button } from "@/components/ui/button";
-import {
-  useDeletePharmacy,
-} from "@/services/pharmacy/mutations";
+import { useDeleteShift } from "@/pages/dashboard/pharmacy/api/mutations";
 import { Loader2 } from "lucide-react";
 
 interface DeleteShiftProps {
   setIsOpen: (state: boolean) => void;
-  pharmacyId: number;
+  shiftId: number;
 }
 
-const DeletePharmcay = ({ setIsOpen, pharmacyId }: DeleteShiftProps) => {
-  const { deletePharmacy, isDeletingPharmacy } = useDeletePharmacy();
+const DeleteShift = ({ setIsOpen, shiftId }: DeleteShiftProps) => {
+  const { deleteShift, isDeletingShift } = useDeleteShift();
 
   return (
     <div className="flex w-full justify-between">
       <Button
         variant="outline"
-        disabled={isDeletingPharmacy}
+        disabled={isDeletingShift}
         type="button"
         onClick={() => setIsOpen(false)}
       >
@@ -25,13 +23,15 @@ const DeletePharmcay = ({ setIsOpen, pharmacyId }: DeleteShiftProps) => {
       <Button
         type="submit"
         variant="destructive"
-        disabled={isDeletingPharmacy}
+        disabled={isDeletingShift}
         onClick={() => {
-          deletePharmacy(pharmacyId);
+          deleteShift({
+            shiftId,
+          });
           setIsOpen(false);
         }}
       >
-        {isDeletingPharmacy ? (
+        {isDeletingShift ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             Deleting
@@ -44,4 +44,4 @@ const DeletePharmcay = ({ setIsOpen, pharmacyId }: DeleteShiftProps) => {
   );
 };
 
-export default DeletePharmcay;
+export default DeleteShift;

@@ -16,12 +16,12 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useCreateEmployee } from "@/services/employees/mutations";
-import { usePharmacyShifts } from "@/services/pharmacy/queries";
+import { useCreateEmployee } from "@/pages/dashboard/employees/api/mutations";
+import { usePharmacyShifts } from "@/pages/dashboard/pharmacy/api/queries";
 import {
   createEmployeeSchema,
   CreateEmployeeValues,
-} from "@/validation/employee-schema";
+} from "@/pages/dashboard/employees/employee-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

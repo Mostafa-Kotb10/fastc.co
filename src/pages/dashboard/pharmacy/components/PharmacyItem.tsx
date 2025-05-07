@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Pharmacy } from "@/types/pharmacy.types";
+import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { format } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import { MoreVertical, PenSquare, Trash, Trash2 } from "lucide-react";

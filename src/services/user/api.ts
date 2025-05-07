@@ -1,5 +1,5 @@
 import { AxiosInstance } from "@/lib/axios";
-import { Pharmacy } from "@/types/pharmacy.types";
+import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { User } from "@/types/user.types";
 
 const END_POINTS = {

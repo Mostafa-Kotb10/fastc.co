@@ -1,4 +1,4 @@
-import { useGetUserPharmacies } from "@/services/pharmacy/queries";
+import { useGetUserPharmacies } from "@/pages/dashboard/pharmacy/api/queries";
 import {
   Card,
   CardContent,
@@ -9,8 +9,8 @@ import {
 import onboardingSrc from "@/assets/images/onboarding.png";
 import { Spinner } from "../../components/Spinner";
 import CreatePharmacyDialog from "./CreatePharmacyDialog";
-import { Pharmacy } from "@/types/pharmacy.types";
-import  PharmacyItem  from "../dashboard/pharmacy/PharmacyItem";
+import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
+import  PharmacyItem  from "../dashboard/pharmacy/components/PharmacyItem";
 
 const PickPharmacy = () => {
   const { data: pharmacies, isPending } = useGetUserPharmacies();

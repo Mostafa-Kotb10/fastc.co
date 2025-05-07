@@ -1,33 +1,34 @@
-import { DataTable } from "../../../components/data-table/data-table";
+import { DataTable } from "@/components/data-table/data-table";
 import { columns } from "./columns";
-
-import { useSearchPharmacyDrugs } from "@/services/pharmacy/queries";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useDebounce } from "@/hooks/useDebounce";
+
 import {
   SearchInput,
   SelectFilter,
 } from "@/components/data-table/data-filters";
+import { useQuery } from "@tanstack/react-query";
+import { getSearchPharmacy } from "../pharmacy/api/api";
 
 const Inventory = () => {
-  const { pharmacyId } = useParams();
-  const [params] = useSearchParams();
+  const { pharmacyId } = useParams<{ pharmacyId: string }>();
+  const [searchParams] = useSearchParams();
 
-  const search = params.get("search") || "";
-  const filter = params.get("filter") || "AVAILABLE"
-  
+  const search = searchParams.get("search") ?? "";
+  const filter = searchParams.get("filter") ?? "EXPIRED";
+  const page = Number(searchParams.get("page") ?? 0);
+  const size = Number(searchParams.get("size") ?? 75);
 
-  const page = Number(params.get("page")) || 0;
-  const size = Number(params.get("size")) || 75;
-
-  const debouncedSearch = useDebounce(search, 300);
-
-  const { data, isPending } = useSearchPharmacyDrugs({
-    pharmacyId: Number(pharmacyId),
-    query: debouncedSearch,
-    filter,
-    page,
-    size,
+  const { data: stock, isPending: isLoadingStock } = useQuery({
+    queryKey: ["expiry-drugs", pharmacyId, filter, page, size, search],
+    queryFn: () =>
+      getSearchPharmacy({
+        pharmacyId: Number(pharmacyId),
+        query: search,
+        filter,
+        page,
+        size,
+      }),
+    enabled: !!pharmacyId,
   });
 
   return (
@@ -54,8 +55,8 @@ const Inventory = () => {
 
         <DataTable
           columns={columns}
-          data={data || []}
-          isLoading={isPending}
+          data={stock || []}
+          isLoading={isLoadingStock}
           configuration={{
             manualFiltering: true,
           }}

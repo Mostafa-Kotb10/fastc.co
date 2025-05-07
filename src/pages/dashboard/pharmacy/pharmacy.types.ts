@@ -1,6 +1,6 @@
-import { Drug } from "./drug.types";
-import { BaseEmployee } from "./employee.types";
-import { User } from "./user.types";
+import { Drug } from "../../../types/drug.types";
+import { BaseEmployee } from "../employees/employee.types";
+import { User } from "../../../types/user.types";
 
 export interface Pharmacy {
   id: number;

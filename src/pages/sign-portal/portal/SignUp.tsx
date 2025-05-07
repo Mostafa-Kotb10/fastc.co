@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { signUpSchema, SignUpValues } from "@/validation/schema";
+import { signUpSchema, SignUpValues } from "@/pages/sign-portal/portal-schema";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { useSignUp } from "@/services/auth/mutations";
 import { Spinner } from "@/components/Spinner";

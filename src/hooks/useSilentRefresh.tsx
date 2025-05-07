@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import { refreshSession } from "@/services/auth/auth";
+import { refreshSession } from "@/services/auth/api";
 import { AuthTokens } from "@/types/auth.types";
 
 export const useSilentRefresh = (

@@ -1,5 +1,5 @@
 import { AxiosInstance } from "@/lib/axios";
-import { PharmacyDrug } from "@/types/pharmacy.types";
+import { PharmacyDrug } from "@/pages/dashboard/pharmacy/pharmacy.types";
 
 interface RequestParams {
   pharmacyId: number;

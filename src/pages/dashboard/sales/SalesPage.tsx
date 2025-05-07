@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Sales from "./Sales";
-import Receipts from "./Receipts";
+import Sales from "./components/Sales";
+import Receipts from "./components/Receipts";
 
 const SalesPage = () => {
   return (

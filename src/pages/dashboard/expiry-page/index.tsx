@@ -5,21 +5,29 @@ import {
 import { DataTable } from "@/components/data-table/data-table";
 import { columns } from "./columns";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useSearchPharmacyDrugs } from "@/services/pharmacy/queries";
+import { useQuery } from "@tanstack/react-query";
+import { getSearchPharmacy } from "../pharmacy/api/api";
 
 const ExpiryPage = () => {
-  const { pharmacyId } = useParams();
+  const { pharmacyId } = useParams<{ pharmacyId: string }>();
   const [searchParams] = useSearchParams();
 
-  const query = searchParams.get("search") || "";
-  const filter = searchParams.get("filter") || "EXPIRED";
+  const search = searchParams.get("search") ?? "";
+  const filter = searchParams.get("filter") ?? "EXPIRED";
+  const page = Number(searchParams.get("page") ?? 0);
+  const size = Number(searchParams.get("size") ?? 75);
 
-  const { data: drugs, isPending: isLoadingDrugs } = useSearchPharmacyDrugs({
-    pharmacyId: Number(pharmacyId),
-    query,
-    filter,
-    page: 0,
-    size: 75,
+  const { data: drugs, isPending: isLoadingDrugs } = useQuery({
+    queryKey: ["expiry-drugs", pharmacyId, filter, page, size, search],
+    queryFn: () =>
+      getSearchPharmacy({
+        pharmacyId: Number(pharmacyId),
+        query: search,
+        filter,
+        page,
+        size,
+      }),
+    enabled: !!pharmacyId,
   });
 
   return (

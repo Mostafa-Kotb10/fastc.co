@@ -1,6 +1,6 @@
 import { AxiosInstance } from "@/lib/axios";
-import { Employee } from "@/types/employee.types";
-import { CreateEmployeeValues, EditEmployeeValues } from "@/validation/employee-schema";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
+import { CreateEmployeeValues, EditEmployeeValues } from "@/pages/dashboard/employees/employee-schema";
 
 const END_POINTS = {
   base: "/api/v1/pharmacies",

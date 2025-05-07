@@ -1,10 +1,10 @@
 import { AxiosInstance } from "@/lib/axios";
-import { Employee } from "@/types/employee.types";
-import { Pharmacy, Shift } from "@/types/pharmacy.types";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
+import { Pharmacy, Shift } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import {
   CreatePharmacyValues,
   EditPharmacyValues,
-} from "@/validation/pharmacy-schema";
+} from "@/pages/dashboard/pharmacy/lib/pharmacy-schema";
 
 const END_POINTS = {
   base: "/api/v1/pharmacies",

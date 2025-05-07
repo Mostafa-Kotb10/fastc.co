@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUserPharmacies } from "../user/api";
+import { getUserPharmacies } from "../../../../services/user/api";
 import {
   getPharmacyDetails,
   getPharmacyEmployees,
   getPharmacyShifts,
-  getSearchPharmacy,
 } from "./api";
 import { useParams } from "react-router-dom";
 
@@ -23,20 +22,6 @@ interface UseSearchPharmacyProps {
   size?: number;
   status?: string;
 }
-
-export const useSearchPharmacyDrugs = ({
-  pharmacyId,
-  query,
-  filter,
-  page = 0,
-  size = 75,
-}: UseSearchPharmacyProps) => {
-  return useQuery({
-    queryKey: ["stock", pharmacyId, query, filter, page, size],
-    queryFn: () => getSearchPharmacy({ pharmacyId, query, filter, page, size }),
-    enabled: !!pharmacyId,
-  });
-};
 
 export const usePharmacyEmployees = ({
   pharmacyId,

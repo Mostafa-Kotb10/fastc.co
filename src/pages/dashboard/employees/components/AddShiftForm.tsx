@@ -8,12 +8,12 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { shiftSchema, ShiftValues } from "@/validation/shift-schema";
+import { shiftSchema, ShiftValues } from "@/pages/dashboard/pharmacy/lib/shift-schema";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TimePickerDemo } from "@/components/time-picker-demo";
-import { useCreateShift } from "@/services/pharmacy/mutations";
+import { useCreateShift } from "@/pages/dashboard/pharmacy/api/mutations";
 import { useParams } from "react-router-dom";
 
 const midnight = new Date();

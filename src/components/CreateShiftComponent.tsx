@@ -10,7 +10,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
-import { shiftSchema, ShiftValues } from "@/validation/shift-schema";
+import { shiftSchema, ShiftValues } from "@/pages/dashboard/pharmacy/lib/shift-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,

@@ -1,9 +1,9 @@
-import { usePharmacyShifts } from "@/services/pharmacy/queries";
-import { Employee } from "@/types/employee.types";
+import { usePharmacyShifts } from "@/pages/dashboard/pharmacy/api/queries";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
 import {
   editEmployeeSchema,
   EditEmployeeValues,
-} from "@/validation/employee-schema";
+} from "@/pages/dashboard/employees/employee-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -24,7 +24,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/Spinner";
-import { useEditEmployee } from "@/services/employees/mutations";
+import { useEditEmployee } from "@/pages/dashboard/employees/api/mutations";
 // if you have one
 
 interface EditEmployeeProps {

@@ -1,7 +1,7 @@
 import { createContext, useLayoutEffect, useState } from "react";
 import { AxiosInstance } from "@/lib/axios";
 import { AuthTokens } from "@/types/auth.types";
-import { refreshSession } from "../../services/auth/auth";
+import { refreshSession } from "../../services/auth/api";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { FullScreenSpinner } from "@/components/Spinner";
 

@@ -7,11 +7,11 @@ import {
   deleteShift,
   editPharmacy,
 } from "./api";
-import { Shift } from "@/types/pharmacy.types";
+import { Shift } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import {
   CreatePharmacyValues,
   EditPharmacyValues,
-} from "@/validation/pharmacy-schema";
+} from "@/pages/dashboard/pharmacy/lib/pharmacy-schema";
 import { toast } from "sonner";
 
 export const useCreateShift = () => {

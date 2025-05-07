@@ -12,7 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import DeleteEmployee from "./DeleteEmployee";
 import EditEmployeeForm from "./EditEmployeeForm";
-import { Employee } from "@/types/employee.types";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

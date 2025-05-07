@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { Receipt, ReceiptItem } from "@/types/receipts.types";
+import { Receipt, ReceiptItem } from "@/pages/dashboard/sales/receipts.types";
 
 export const getReceiptsColumns = (
   setSelectedRecipt: (receipt: Receipt) => void,

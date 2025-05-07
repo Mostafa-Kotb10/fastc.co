@@ -1,8 +1,8 @@
 import { DataTable } from "@/components/data-table/data-table";
-import { useGetAllReceipts } from "@/services/receipts/queries";
+import { useGetAllReceipts } from "@/pages/dashboard/sales/api/queries";
 import { useCallback, useState } from "react";
-import { getReceiptsColumns } from "./receipts-columns";
-import { Receipt } from "@/types/receipts.types";
+import { getReceiptsColumns } from "../receipts-columns";
+import { Receipt } from "@/pages/dashboard/sales/receipts.types";
 import ReceiptsFilters from "./ReceiptsFilters";
 
 const Receipts = () => {

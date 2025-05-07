@@ -14,8 +14,8 @@ import { Button } from "@/components/ui/button";
 import {
   editPharmacySchema,
   EditPharmacyValues,
-} from "@/validation/pharmacy-schema"; // adjust path
-import { useEditPharmacy } from "@/services/pharmacy/mutations";
+} from "@/pages/dashboard/pharmacy/lib/pharmacy-schema"; // adjust path
+import { useEditPharmacy } from "@/pages/dashboard/pharmacy/api/mutations";
 
 const EditPharmacyForm = ({
   defaultValues,

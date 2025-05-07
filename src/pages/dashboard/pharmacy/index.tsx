@@ -1,17 +1,32 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import CreatePharmacyDialog from "@/pages/pick-pharmacy/CreatePharmacyDialog";
-import { PharmacyItemWithMenu } from "@/pages/dashboard/pharmacy/PharmacyItem";
-import { useGetUserPharmacies } from "@/services/pharmacy/queries";
+import { PharmacyItemWithMenu } from "@/pages/dashboard/pharmacy/components/PharmacyItem";
 import { useParams } from "react-router-dom";
-import { useDeletePharmacy } from "@/services/pharmacy/mutations";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { toast } from "sonner";
+import { deletePharmacy } from "./api/api";
+import { useGetUserPharmacies } from "./api/queries";
 
 const PharmacyPage = () => {
-
-
   const { pharmacyId } = useParams();
-  const { data: pharmacies, isPending: isLoadingPharmacy } =
+  const queryClient = useQueryClient();
+
+  const { data: pharmacies, isPending: isLoadingPharmacies } =
     useGetUserPharmacies();
-  const { deletePharmacy } = useDeletePharmacy();
+
+  const { mutate } = useMutation({
+    mutationFn: (pharmacyId: number) => deletePharmacy(pharmacyId),
+    onSuccess: () => {
+      toast.success("Pharmacy deleted successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["pharmacies"],
+      });
+    },
+    onError: () => {
+      toast.error("Failed to delete the pharmacy");
+    },
+  });
 
   return (
     <>
@@ -20,7 +35,7 @@ const PharmacyPage = () => {
       <div className="mt-10 space-y-3">
         <CreatePharmacyDialog onlyBranch pharmacyId={Number(pharmacyId)} />
         <ul className="">
-          {isLoadingPharmacy ? (
+          {isLoadingPharmacies ? (
             <PharmaciesSkeleton />
           ) : (
             <ul className="space-y-4">
@@ -29,7 +44,7 @@ const PharmacyPage = () => {
                   key={pharmacy.id}
                   pharmacy={pharmacy}
                   withDialog
-                  onDelete={deletePharmacy}
+                  onDelete={mutate}
                 />
               ))}
             </ul>

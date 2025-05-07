@@ -9,8 +9,8 @@ import Onboarding from "./sign-portal/configuration/onboarding";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RequireSignUp from "@/components/auth/RequireSignUp";
 import PickPharmacy from "@/pages/pick-pharmacy/PickPharmacy";
-import PharmacyPage from "./dashboard/pharmacy/PharmacyPage";
-import ExpiryPage from "./dashboard/expiry-page/ExpiryPage";
+import PharmacyPage from "./dashboard/pharmacy";
+import ExpiryPage from "./dashboard/expiry-page";
 import SalesPage from "./dashboard/sales/SalesPage";
 import EmployeesPage from "./dashboard/employees/EmployeesPage";
 

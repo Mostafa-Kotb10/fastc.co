@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatTime } from "@/lib/utils";
-import { Shift } from "@/types/pharmacy.types";
+import { Shift } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { MoreVertical, Trash, Trash2 } from "lucide-react";
 import { useState } from "react";
 import DeleteShift from "./DeleteShift";

@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-import { refreshSession, signIn, signUp } from "./auth";
+import { refreshSession, signIn, signUp } from "./api";
 import { SignInValues } from "@/pages/sign-portal/schema";
 
 import useAuthV2 from "@/hooks/useAuthV2";

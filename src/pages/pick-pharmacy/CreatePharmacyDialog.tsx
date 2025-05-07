@@ -23,10 +23,10 @@ import { Button } from "@/components/ui/button";
 import {
   createPharmacySchema,
   CreatePharmacyValues,
-} from "@/validation/pharmacy-schema";
+} from "@/pages/dashboard/pharmacy/lib/pharmacy-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useCreatePharmacy } from "@/services/pharmacy/mutations";
+import { useCreatePharmacy } from "@/pages/dashboard/pharmacy/api/mutations";
 import { FullScreenSpinner } from "@/components/Spinner";
 
 const CreatePharmacyDialog = ({

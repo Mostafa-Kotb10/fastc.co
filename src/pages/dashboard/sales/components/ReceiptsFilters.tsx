@@ -6,7 +6,7 @@ import {
 } from "@/components/data-table/data-filters";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { usePharmacyShifts } from "@/services/pharmacy/queries";
+import { usePharmacyShifts } from "@/pages/dashboard/pharmacy/api/queries";
 import { SlidersHorizontal } from "lucide-react";
 
 const ReceiptsFilters = () => {

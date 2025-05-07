@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { onboardingFormSchema, OnboardingValues } from "@/validation/schema";
+import { onboardingFormSchema, OnboardingValues } from "@/pages/sign-portal/portal-schema";
 import { useSignUpStore } from "@/store/signUpStore";
 import {
   FormField,

@@ -1,4 +1,4 @@
-import { Shift } from "./pharmacy.types";
+import { Shift } from "../pharmacy/pharmacy.types";
 
 export type BaseEmployee = {
   id: number;

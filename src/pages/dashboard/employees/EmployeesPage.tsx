@@ -6,16 +6,16 @@ import { DataTable } from "@/components/data-table/data-table";
 import {
   usePharmacyEmployees,
   usePharmacyShifts,
-} from "@/services/pharmacy/queries";
+} from "@/pages/dashboard/pharmacy/api/queries";
 import { useParams, useSearchParams } from "react-router-dom";
 import { getEmployeeDataColumns } from "./columns";
-import ShiftsCard from "./ShiftsCard";
-import AddShiftForm from "./AddShiftForm";
+import ShiftsCard from "./components/ShiftsCard";
+import AddShiftForm from "./components/AddShiftForm";
 import { Card, CardContent } from "@/components/ui/card";
-import CreateEmployeeForm from "./CreateEmployeeForm";
+import CreateEmployeeForm from "./components/CreateEmployeeForm";
 import { useCallback, useMemo, useState } from "react";
-import { Employee } from "@/types/employee.types";
-import { useDeleteEmployee } from "@/services/employees/mutations";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
+import { useDeleteEmployee } from "@/pages/dashboard/employees/api/mutations";
 import {
   Dialog,
   DialogContent,

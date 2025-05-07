@@ -1,5 +1,5 @@
 import { sortedHeader } from "@/lib/utils";
-import { PharmacyDrug } from "@/types/pharmacy.types";
+import { PharmacyDrug } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<PharmacyDrug>[] = [

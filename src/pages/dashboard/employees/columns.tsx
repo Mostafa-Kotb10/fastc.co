@@ -1,7 +1,7 @@
-import { PharmacyEmployee } from "@/types/pharmacy.types";
+import { PharmacyEmployee } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { ColumnDef } from "@tanstack/react-table";
-import DataTableRowActions from "./DataTableRowActions";
-import { Employee } from "@/types/employee.types";
+import DataTableRowActions from "./components/DataTableRowActions";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
 
 interface EmployeeDataColumnsProps {
   onEdit: (data: any) => void;
