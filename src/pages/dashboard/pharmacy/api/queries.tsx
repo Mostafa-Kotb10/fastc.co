@@ -6,11 +6,14 @@ import {
   getPharmacyShifts,
 } from "./api";
 import { useParams } from "react-router-dom";
+import { useGetMe } from "@/services/user/queries";
 
 export const useGetUserPharmacies = () => {
+  const { user, isPending } = useGetMe();
   return useQuery({
-    queryKey: ["pharmacies"],
+    queryKey: ["pharmacies", user?.id],
     queryFn: getUserPharmacies,
+    enabled: !!user,
   });
 };
 
@@ -29,7 +32,6 @@ export const usePharmacyEmployees = ({
   size,
   status,
 }: UseSearchPharmacyProps) => {
-
   const {
     data: employees,
     isPending: isLoadingEmployees,

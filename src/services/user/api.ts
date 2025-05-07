@@ -7,8 +7,8 @@ const END_POINTS = {
   getPharmacy: "/api/v1/users/pharmacy",
 };
 
-export const getUser = () => {
-  return AxiosInstance.get<User>("/api/v1/auth/me");
+export const getUser = async () => {
+  return (await AxiosInstance.get<User>("/api/v1/auth/me")).data;
 };
 
 export const getUserPharmacies = async () => {

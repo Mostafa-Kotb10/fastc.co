@@ -35,7 +35,7 @@ interface EditEmployeeProps {
 const EditEmployeeForm = ({ employee, setIsOpen }: EditEmployeeProps) => {
   const { user, age, gender, salary, shift } = employee;
   const { shifts, isLoadingShifts } = usePharmacyShifts();
-  const {editEmployee, isEditingEmployee} = useEditEmployee();
+  const { editEmployee, isEditingEmployee } = useEditEmployee();
 
   const form = useForm<EditEmployeeValues>({
     resolver: zodResolver(editEmployeeSchema),
@@ -47,13 +47,14 @@ const EditEmployeeForm = ({ employee, setIsOpen }: EditEmployeeProps) => {
       gender,
       salary,
       shiftId: shift.id,
+      role: "EMPLOYEE",
     },
   });
 
   const onSubmit = (values: EditEmployeeValues) => {
     console.log("Edit values:", values);
-    // TODO: call useEditEmployeeMutation here
-    editEmployee(values)
+
+    editEmployee(values);
     setIsOpen(false);
   };
 
@@ -143,40 +144,70 @@ const EditEmployeeForm = ({ employee, setIsOpen }: EditEmployeeProps) => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="shiftId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Shift</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={(val) => field.onChange(Number(val))}
-                  defaultValue={field.value?.toString()}
-                >
-                  <SelectTrigger>
-                    {shifts?.find((s) => s.id === field.value)?.name ||
-                      "Select Shift"}
-                  </SelectTrigger>
-                  <SelectContent>
-                    {isLoadingShifts ? (
-                      <div className="p-2 text-center">
-                        <Spinner className="animate-spin" />
-                      </div>
-                    ) : (
-                      shifts?.map((shift) => (
-                        <SelectItem key={shift.id} value={shift.id.toString()}>
-                          {shift.name}
-                        </SelectItem>
-                      ))
-                    )}
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-6">
+          <FormField
+            control={form.control}
+            name="role"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Role</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      {field.value || "Select Role"}
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="EMPLOYEE">Employee</SelectItem>
+                      <SelectItem value="MANAGER">Manager</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="shiftId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Shift</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={(val) => field.onChange(Number(val))}
+                    defaultValue={field.value?.toString()}
+                  >
+                    <SelectTrigger>
+                      {shifts?.find((s) => s.id === field.value)?.name ||
+                        "Select Shift"}
+                    </SelectTrigger>
+                    <SelectContent>
+                      {isLoadingShifts ? (
+                        <div className="p-2 text-center">
+                          <Spinner className="animate-spin" />
+                        </div>
+                      ) : (
+                        shifts?.map((shift) => (
+                          <SelectItem
+                            key={shift.id}
+                            value={shift.id.toString()}
+                          >
+                            {shift.name}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div className="flex justify-end space-x-2">
           <Button

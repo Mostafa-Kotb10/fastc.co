@@ -24,6 +24,7 @@ export const editEmployeeSchema = z.object({
   gender: z.enum(["male", "female"]),
   salary: z.coerce.number().nonnegative(),
   shiftId: z.number().int().nonnegative(),
+  role: z.enum(["EMPLOYEE", "MANAGER"])
 });
 
 export type EditEmployeeValues = z.infer<typeof editEmployeeSchema>;

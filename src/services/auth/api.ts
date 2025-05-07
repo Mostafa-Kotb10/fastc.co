@@ -10,12 +10,17 @@ import { User } from "@/types/user.types";
 export const signIn = async (data: SignInValues) => {
   console.log("Sign Func", data);
   return (
-    await AxiosInstanceNoAuth.post<AuthTokens>("/api/v1/auth/login", data)
+    await AxiosInstanceNoAuth.post<AuthTokens>("/api/v1/auth/login", data, {
+      headers: {
+        "User-Agent": "Web",
+        
+      }
+    })
   ).data;
 };
 
 export const getUser = async () => {
-  return await AxiosInstance.get<User>("/api/v1/auth/me");
+  return (await AxiosInstance.get<User>("/api/v1/auth/me")).data;
 };
 
 export const refreshSession = async (refreshToken: string) => {

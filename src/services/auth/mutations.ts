@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { SignUpRequestValues } from "@/types/auth.types";
 import axios from "axios";
 import { useSignInStore } from "@/store/signInStore";
+import { getUser, getUserPharmacies } from "../user/api";
 
 export const useSignOut = () => {
   const { removeItem } = useLocalStorage("tokens");
@@ -33,11 +34,22 @@ export const useSignInV2 = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: (data: SignInValues) => signIn(data),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success("Welcome!");
       setTokens(data);
       setItem(data);
       setIsSignedIn(true);
+
+      try {
+        const pharmacies =  await getUserPharmacies();
+        const user = await getUser();
+
+        console.table(user);
+        console.table(pharmacies);
+      } catch (error) {
+        console.log(error);
+      }
+
       navigate("/pick-pharmacy");
     },
     onError: (error) => {

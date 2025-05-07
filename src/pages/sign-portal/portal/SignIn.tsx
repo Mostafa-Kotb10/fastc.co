@@ -73,34 +73,6 @@ const SignIn = () => {
           )}
         />
 
-        {/* <div className="flex items-center justify-between space-x-2">
-          <FormField
-            control={form.control}
-            name="remember"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center space-y-0.5 space-x-2">
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel className="text-base">Remember me</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-          <div>
-            <Link
-              to="/forgot-password"
-              className="cursor-pointer text-blue-500"
-            >
-              Forgot password?
-            </Link>
-          </div>
-        </div> */}
-
         <div className="space-y-6">
           <div className="space-y-6">
             <Button

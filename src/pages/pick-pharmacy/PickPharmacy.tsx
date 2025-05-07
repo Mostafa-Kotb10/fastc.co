@@ -43,7 +43,7 @@ const PickPharmacy = () => {
               <>
                 <div className="flex size-full items-center justify-center">
                   <div className="flex flex-col items-center gap-1">
-                    <CreatePharmacyDialog onlyBranch={false}  />
+                    <CreatePharmacyDialog />
                     <p>No pharmacies found</p>
                   </div>
                 </div>

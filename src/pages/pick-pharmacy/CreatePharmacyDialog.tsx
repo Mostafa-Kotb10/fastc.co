@@ -27,13 +27,12 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useCreatePharmacy } from "@/pages/dashboard/pharmacy/api/mutations";
-import { FullScreenSpinner } from "@/components/Spinner";
 
 const CreatePharmacyDialog = ({
   onlyBranch = false,
   pharmacyId,
 }: {
-  onlyBranch: boolean;
+  onlyBranch?: boolean;
   pharmacyId?: number;
 }) => {
   const { createPharmacy, isLoadingPharmacy } = useCreatePharmacy();
@@ -51,7 +50,7 @@ const CreatePharmacyDialog = ({
     },
   });
 
-  if (!pharmacyId) return <FullScreenSpinner />
+  // if (!pharmacyId) return <FullScreenSpinner />
 
   const onSubmit = (data: CreatePharmacyValues) => {
     const payload = {

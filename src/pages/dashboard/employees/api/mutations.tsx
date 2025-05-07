@@ -3,7 +3,7 @@ import {
   EditEmployeeValues,
 } from "@/pages/dashboard/employees/employee-schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEmployee, deleteEmployee, editEmployee } from "../api";
+import { createEmployee, deleteEmployee, editEmployee } from "./api";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 

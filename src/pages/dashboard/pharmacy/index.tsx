@@ -7,11 +7,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { deletePharmacy } from "./api/api";
 import { useGetUserPharmacies } from "./api/queries";
+import { useGetMe } from "@/services/user/queries";
 
 const PharmacyPage = () => {
   const { pharmacyId } = useParams();
   const queryClient = useQueryClient();
 
+  const {user, isPending: isLoadingUser} = useGetMe(); 
+  console.log(user);
   const { data: pharmacies, isPending: isLoadingPharmacies } =
     useGetUserPharmacies();
 
@@ -27,6 +30,10 @@ const PharmacyPage = () => {
       toast.error("Failed to delete the pharmacy");
     },
   });
+
+  if (user?.role === "MANAGER" && !isLoadingUser) {
+    return null
+  } 
 
   return (
     <>
