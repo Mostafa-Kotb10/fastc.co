@@ -6,12 +6,14 @@ import {
   SearchInput,
   SelectFilter,
 } from "@/components/data-table/data-filters";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
+import { CustomPagination } from "@/components/data-table/data-pagination";
 
 const Inventory = () => {
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const search = searchParams.get("search") ?? "";
   const filter = searchParams.get("filter") ?? "EXPIRED";
@@ -61,6 +63,7 @@ const Inventory = () => {
             manualFiltering: true,
           }}
         />
+        <CustomPagination className="mt-4 self-start" />
       </div>
     </>
   );

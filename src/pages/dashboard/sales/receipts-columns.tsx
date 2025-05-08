@@ -1,20 +1,18 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Receipt, ReceiptItem } from "@/pages/dashboard/sales/receipts.types";
+import ReceiptModal from "./components/ReceiptModal";
 
-export const getReceiptsColumns = (
-  setSelectedRecipt: (receipt: Receipt) => void,
-): ColumnDef<Receipt>[] => [
+export const columns: ColumnDef<Receipt>[] = [
   {
     accessorKey: "id",
     header: "Receipt #",
     cell: ({ row }) => `#${row.original.id}`,
   },
   {
-    accessorKey: "cashier.name",
+    accessorKey: "cashier.username",
     header: "Employee",
-    cell: ({ row }) => row.original.cashier?.name || "N/A",
+    cell: ({ row }) => row.original.cashier?.username || "N/A",
   },
   {
     accessorKey: "createdAt",
@@ -29,7 +27,7 @@ export const getReceiptsColumns = (
   {
     accessorKey: "total",
     header: "Revenue",
-    cell: ({ row }) => `₦${row.original.total?.toFixed(2)}`,
+    cell: ({ row }) => `LE${row.original.total?.toFixed(2)}`,
   },
   {
     accessorKey: "profit",
@@ -39,19 +37,16 @@ export const getReceiptsColumns = (
         (acc: number, item: ReceiptItem) => acc + (item.amountDue || 0),
         0,
       );
-      return `₦${profit.toFixed(2)}`;
+      return `LE${profit.toFixed(2)}`;
     },
   },
   {
     id: "actions",
     header: "View",
-    cell: ({ row }) => (
-      <Button
-        className="text-sm text-blue-600 hover:underline"
-        onClick={() => setSelectedRecipt(row.original)}
-      >
-        View
-      </Button>
-    ),
+    size: 60,
+    cell: ({ row }) => {
+      return <ReceiptModal receipt={row.original as Receipt} />
+    },
   },
 ];
+

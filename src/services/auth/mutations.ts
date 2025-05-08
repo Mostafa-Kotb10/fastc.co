@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-import { getUser, refreshSession, signIn, signUp } from "./api";
+import { refreshSession, signIn, signUp } from "./api";
 import { SignInValues } from "@/pages/sign-portal/schema";
 
 import useAuthV2 from "@/hooks/useAuthV2";
@@ -11,24 +11,47 @@ import { toast } from "sonner";
 import { SignUpRequestValues } from "@/types/auth.types";
 import axios from "axios";
 import { useSignInStore } from "@/store/signInStore";
-import { getUserPharmacies } from "../user/api";
-import { AxiosInstance, AxiosInstance } from "@/lib/axios";
+
 import { User } from "@/types/user.types";
 import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
 
-export const useSignOut = () => {
-  const { removeItem } = useLocalStorage("tokens");
-  const navigate = useNavigate();
+export const useSignUp = () => {
+  // const { setItem } = useLocalStorage("tokens");
+  // const { setTokens } = useAuthV2();
+  // const navigate = useNavigate();
 
-  const signOut = () => {
-    navigate("/");
-    removeItem();
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (data: SignUpRequestValues) => signUp(data),
+    onSuccess: (data) => {
+      console.log("response-data: ", data);
+      toast.success("Account created successfully!");
+    },
+    onError: (error) => {
+      console.error("Sign-up failed:", error);
+
+      // Properly handle Axios errors
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data;
+        const errorMessage =
+          errorResponse?.message || "An error occurred during sign up";
+        toast.error("Sign up failed", {
+          description: errorMessage,
+        });
+      } else {
+        toast.error("Sign up failed", {
+          description: "An unexpected error occurred",
+        });
+      }
+    },
+  });
+  return {
+    signUp: mutate,
+    isSigningIn: isPending,
+    error,
   };
-
-  return { signOut };
 };
 
-export const useSignInV2 = () => {
+export const useSignIn = () => {
   const { setTokens } = useAuthV2();
   const { setItem, removeItem } = useLocalStorage("tokens");
   const { setIsSignedIn } = useSignInStore();
@@ -49,9 +72,6 @@ export const useSignInV2 = () => {
 
       try {
         const user: User = (await SignInstance.get("/api/v1/auth/me")).data;
-        const pharmacies: Pharmacy[] = (
-          await SignInstance.get("/api/v1/users/pharmacy")
-        ).data;
 
         if (user.role === "EMPLOYEE") {
           toast("Unauthorized");
@@ -59,6 +79,9 @@ export const useSignInV2 = () => {
         }
 
         if (user.role === "MANAGER") {
+          const pharmacies: Pharmacy[] = (
+            await SignInstance.get("/api/v1/users/pharmacy")
+          ).data;
           navigate(`/dashboard/${pharmacies[0].id}`);
         }
 
@@ -73,7 +96,7 @@ export const useSignInV2 = () => {
       } catch (error) {
         console.log(error);
         setTokens(null);
-        removeItem()
+        removeItem();
         setIsSignedIn(false);
       }
     },
@@ -92,6 +115,18 @@ export const useSignInV2 = () => {
     isPending,
     error,
   };
+};
+
+export const useSignOut = () => {
+  const { removeItem } = useLocalStorage("tokens");
+  const navigate = useNavigate();
+
+  const signOut = () => {
+    navigate("/");
+    removeItem();
+  };
+
+  return { signOut };
 };
 
 export const useRefreshToken = () => {
@@ -126,42 +161,6 @@ export const useRefreshToken = () => {
   return {
     refresh,
     isRefreshing,
-    error,
-  };
-};
-
-export const useSignUp = () => {
-  // const { setItem } = useLocalStorage("tokens");
-  // const { setTokens } = useAuthV2();
-  // const navigate = useNavigate();
-
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: (data: SignUpRequestValues) => signUp(data),
-    onSuccess: (data) => {
-      console.log("response-data: ", data);
-      toast.success("Account created successfully!");
-    },
-    onError: (error) => {
-      console.error("Sign-up failed:", error);
-
-      // Properly handle Axios errors
-      if (axios.isAxiosError(error)) {
-        const errorResponse = error.response?.data;
-        const errorMessage =
-          errorResponse?.message || "An error occurred during sign up";
-        toast.error("Sign up failed", {
-          description: errorMessage,
-        });
-      } else {
-        toast.error("Sign up failed", {
-          description: "An unexpected error occurred",
-        });
-      }
-    },
-  });
-  return {
-    signUp: mutate,
-    isSigningIn: isPending,
     error,
   };
 };

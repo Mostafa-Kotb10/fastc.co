@@ -1,18 +1,20 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../components/AppLayout";
-import Home from "@/pages/home/Home";
-import SignPortal from "./sign-portal/portal/SignPortal";
 import { SignPortalProvider } from "../context/SignPortalContext";
-import Dashboard from "./dashboard/Dashboard";
-import Inventory from "./dashboard/inventory/Inventory";
-import Onboarding from "./sign-portal/configuration/onboarding";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RequireSignUp from "@/components/auth/RequireSignUp";
-import PickPharmacy from "@/pages/pick-pharmacy/PickPharmacy";
-import PharmacyPage from "./dashboard/pharmacy";
-import ExpiryPage from "./dashboard/expiry-page";
-import SalesPage from "./dashboard/sales/SalesPage";
-import EmployeesPage from "./dashboard/employees/EmployeesPage";
+
+const Home = lazy(() => import("@/pages/home/Home"));
+const SignPortal = lazy(() => import("./sign-portal/portal/SignPortal"));
+const Dashboard = lazy(() => import("./dashboard/Dashboard"));
+const Inventory = lazy(() => import("./dashboard/inventory/Inventory"));
+const Onboarding = lazy(() => import("./sign-portal/configuration/onboarding"));
+const PickPharmacy = lazy(() => import("@/pages/pick-pharmacy/PickPharmacy"));
+const PharmacyPage = lazy(() => import("./dashboard/pharmacy"));
+const ExpiryPage = lazy(() => import("./dashboard/expiry-page"));
+const SalesPage = lazy(() => import("./dashboard/sales"));
+const EmployeesPage = lazy(() => import("./dashboard/employees/EmployeesPage"));
 
 export const router = createBrowserRouter([
   {
@@ -56,8 +58,8 @@ export const router = createBrowserRouter([
           },
           {
             path: "employees",
-            element: <EmployeesPage />
-          }
+            element: <EmployeesPage />,
+          },
         ],
       },
       {
@@ -76,7 +78,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
     ],
   },
 ]);

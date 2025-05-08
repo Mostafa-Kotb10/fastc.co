@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getUser } from "./api";
+
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useEffect } from "react";
+import { getUser } from "../auth/api";
 
 export const useGetUser = () => {
   const queryClient = useQueryClient();

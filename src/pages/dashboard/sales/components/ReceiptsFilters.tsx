@@ -11,8 +11,9 @@ import { SlidersHorizontal } from "lucide-react";
 
 const ReceiptsFilters = () => {
   const { shifts, isLoadingShifts } = usePharmacyShifts();
+
   return (
-    <div className="mb-4 flex md:flex-col gap-2 md:gap-4">
+    <div className="mb-4 flex gap-2 md:flex-col md:gap-4">
       <IDSearchInput className="w-full" />
       <div className="flex gap-2">
         <div className="md:hidden">
@@ -28,7 +29,7 @@ const ReceiptsFilters = () => {
               <DateFilter placeholderFrom="From" placeholderTo="To" />
               {!isLoadingShifts && shifts && (
                 <SelectFilter
-                  param="shift"
+                  param="shift_id"
                   label="Select Shift"
                   filters={shifts.map((shift) => ({
                     name: shift.name,
@@ -37,6 +38,7 @@ const ReceiptsFilters = () => {
                 />
               )}
               <SelectFilter
+                param="status"
                 filters={[
                   { name: "Issued", value: "ISSUED" },
                   { name: "Returned", value: "RETURNED" },
@@ -60,7 +62,7 @@ const ReceiptsFilters = () => {
             <DateFilter placeholderFrom="From" placeholderTo="To" />
             {!isLoadingShifts && shifts && (
               <SelectFilter
-                param="shift"
+                param="shift_id"
                 label="Select Shift"
                 filters={shifts.map((shift) => ({
                   name: shift.name,
@@ -69,6 +71,7 @@ const ReceiptsFilters = () => {
               />
             )}
             <SelectFilter
+            param="status"
               filters={[
                 { name: "Issued", value: "ISSUED" },
                 { name: "Returned", value: "RETURNED" },

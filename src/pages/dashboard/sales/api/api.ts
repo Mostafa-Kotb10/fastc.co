@@ -20,3 +20,18 @@ type GetAllReceiptsParams = {
 export const getAllReceipts = async (params: GetAllReceiptsParams = {}) => {
   return (await AxiosInstance.get(`${BASE_URL}/filter`, { params })).data;
 };
+
+type ReportsFilters = {
+  drug_id?: number;
+  page?: number; // default 0
+  size?: number; // default 10
+};
+
+export const getAllReports = async (
+  params: ReportsFilters,
+  pharmacyId: number,
+) => {
+  return await AxiosInstance.get(`/api/v1/pharmacies/${pharmacyId}/reports`, {
+    params,
+  });
+};

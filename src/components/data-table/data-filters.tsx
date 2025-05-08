@@ -127,19 +127,18 @@ type FilterProps = {
     value: string;
   }[];
 };
-
 export const SelectFilter = ({
   filters,
   label,
-  param = "filter",
+  param ="filter",
 }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selected = searchParams.get(param) || "";
+  const selected = searchParams.get(param) || ""; // Default to empty string if no value exists
 
   const setFilter = (value: string) => {
     setSearchParams((prev) => {
       const newParams = new URLSearchParams(prev);
-      newParams.set(param, value);
+      newParams.set(param, value); // Sets the filter parameter in the URL
       return newParams;
     });
   };

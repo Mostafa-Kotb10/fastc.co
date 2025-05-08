@@ -24,15 +24,17 @@ type GetAllReceiptsParams = {
   to_date?: string;
   page?: number;
   size?: number;
+  status?: string;
 };
-export const useGetAllReceipts = (params: GetAllReceiptsParams = {}) => {
+
+export const useGetAllReceipts = (params: GetAllReceiptsParams) => {
   const {
     data,
     isPending: isLoading,
     error,
     isFetching,
   } = useQuery({
-    queryKey: ["receipts", params],
+    queryKey: ["receipts", {...params}],
     queryFn: () => getAllReceipts(params),
   });
 
