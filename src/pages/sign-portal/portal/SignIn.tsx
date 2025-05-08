@@ -29,7 +29,6 @@ const SignIn = () => {
   const { setPortalParam } = useSignPortalContext();
 
   const onSubmit = (data: SignInValues) => {
-    console.log(data);
     signIn(data);
   };
 

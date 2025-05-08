@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
-import { refreshSession, signIn, signUp } from "./api";
+import { getUser, refreshSession, signIn, signUp } from "./api";
 import { SignInValues } from "@/pages/sign-portal/schema";
 
 import useAuthV2 from "@/hooks/useAuthV2";
@@ -11,7 +11,10 @@ import { toast } from "sonner";
 import { SignUpRequestValues } from "@/types/auth.types";
 import axios from "axios";
 import { useSignInStore } from "@/store/signInStore";
-import { getUser, getUserPharmacies } from "../user/api";
+import { getUserPharmacies } from "../user/api";
+import { AxiosInstance, AxiosInstance } from "@/lib/axios";
+import { User } from "@/types/user.types";
+import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
 
 export const useSignOut = () => {
   const { removeItem } = useLocalStorage("tokens");
@@ -27,7 +30,7 @@ export const useSignOut = () => {
 
 export const useSignInV2 = () => {
   const { setTokens } = useAuthV2();
-  const { setItem } = useLocalStorage("tokens");
+  const { setItem, removeItem } = useLocalStorage("tokens");
   const { setIsSignedIn } = useSignInStore();
 
   const navigate = useNavigate();
@@ -35,22 +38,44 @@ export const useSignInV2 = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: (data: SignInValues) => signIn(data),
     onSuccess: async (data) => {
-      toast.success("Welcome!");
-      setTokens(data);
-      setItem(data);
-      setIsSignedIn(true);
+      const SignInstance = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${data.accessToken}`,
+        },
+      });
 
       try {
-        const pharmacies =  await getUserPharmacies();
-        const user = await getUser();
+        const user: User = (await SignInstance.get("/api/v1/auth/me")).data;
+        const pharmacies: Pharmacy[] = (
+          await SignInstance.get("/api/v1/users/pharmacy")
+        ).data;
 
-        console.table(user);
-        console.table(pharmacies);
+        if (user.role === "EMPLOYEE") {
+          toast("Unauthorized");
+          return null;
+        }
+
+        if (user.role === "MANAGER") {
+          navigate(`/dashboard/${pharmacies[0].id}`);
+        }
+
+        if (user.role === "OWNER") {
+          navigate("/pick-pharmacy");
+        }
+
+        toast.success("Welcome");
+        setTokens(data);
+        setItem(data);
+        setIsSignedIn(true);
       } catch (error) {
         console.log(error);
+        setTokens(null);
+        removeItem()
+        setIsSignedIn(false);
       }
-
-      navigate("/pick-pharmacy");
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
