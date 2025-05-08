@@ -9,6 +9,7 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
 import { CustomPagination } from "@/components/data-table/data-pagination";
+import { useEffect } from "react";
 
 const Inventory = () => {
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
@@ -32,6 +33,12 @@ const Inventory = () => {
       }),
     enabled: !!pharmacyId,
   });
+
+  useEffect(() => {
+    queryClient.prefetchQuery({
+      queryKey: ["expiry-drugs"]
+    })
+  }, [])
 
   return (
     <>

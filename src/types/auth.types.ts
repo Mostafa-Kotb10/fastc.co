@@ -23,4 +23,4 @@ type ErrorResponse = {
   status: number;
 };
 
-export type SignUpResponse = { user: User; jwt: AuthTokens } | ErrorResponse;
+export type SignUpResponse = { user: User; jwt: AuthTokens };

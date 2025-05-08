@@ -23,9 +23,9 @@ export const refreshSession = async (refreshToken: string) => {
     await AxiosInstance.post<AuthTokens>("/api/v1/auth/refresh", {
       refreshToken,
     })
-  )?.data;
+  ).data;
 };
 
 export const signUp = async (data: SignUpRequestValues) => {
-  return await AxiosInstance.post<SignUpResponse>("/api/v1/auth/signup", data);
+  return (await AxiosInstance.post<SignUpResponse>("/api/v1/auth/signup", data)).data;
 };

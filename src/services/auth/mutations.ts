@@ -16,20 +16,22 @@ import { User } from "@/types/user.types";
 import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
 
 export const useSignUp = () => {
-  // const { setItem } = useLocalStorage("tokens");
-  // const { setTokens } = useAuthV2();
-  // const navigate = useNavigate();
+  const { setItem } = useLocalStorage("tokens");
+  const { setTokens } = useAuthV2();
+  const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: (data: SignUpRequestValues) => signUp(data),
     onSuccess: (data) => {
       console.log("response-data: ", data);
+      setItem(data.jwt);
+      setTokens(data.jwt);
+      navigate("sign-portal?portal=sign-up");
       toast.success("Account created successfully!");
     },
     onError: (error) => {
       console.error("Sign-up failed:", error);
 
-      // Properly handle Axios errors
       if (axios.isAxiosError(error)) {
         const errorResponse = error.response?.data;
         const errorMessage =
