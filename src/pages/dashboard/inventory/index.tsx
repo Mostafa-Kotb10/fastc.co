@@ -37,29 +37,38 @@ const Inventory = () => {
         size,
       }),
     enabled,
+    staleTime: 1000 * 60 * 5,
   });
 
   const isLast = !stock || stock.length < size;
 
   useEffect(() => {
-    if (!isLast && enabled) {
-      queryClient.prefetchQuery({
-        queryKey: ["stock", numericPharmacyId, filter, search, page + 1, size],
-        queryFn: () =>
-          getSearchPharmacy({
-            pharmacyId: numericPharmacyId,
-            query: search,
-            filter,
-            page: page + 1,
-            size,
-          }),
-      });
+    if (enabled && !isLast) {
+      const nextPageKey = [
+        "stock",
+        numericPharmacyId,
+        filter,
+        search,
+        page + 1,
+        size,
+      ];
+
+      if (!queryClient.getQueryData(nextPageKey)) {
+        queryClient.prefetchQuery({
+          queryKey: nextPageKey,
+          queryFn: () =>
+            getSearchPharmacy({
+              pharmacyId: numericPharmacyId,
+              query: search,
+              filter,
+              page: page + 1,
+              size,
+            }),
+          staleTime: 1000 * 60 * 5,
+        });
+      }
     }
-  }, [isLast, enabled, queryClient, numericPharmacyId, filter, search, page, size]);
-
-  // TODO: featching both next and current again on rerender.
-
-
+  }, [page, isLast, enabled]);
 
   return (
     <>
