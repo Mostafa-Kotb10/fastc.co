@@ -16,29 +16,50 @@ const Inventory = () => {
   const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  const search = searchParams.get("search") ?? "";
-  const filter = searchParams.get("filter") ?? "EXPIRED";
-  const page = Number(searchParams.get("page") ?? 0);
-  const size = Number(searchParams.get("size") ?? 75);
+  const search = searchParams.get("search") || "";
+  const filter = searchParams.get("filter") || "";
+  const page = Number(searchParams.get("page") || 0);
+  const size = Number(searchParams.get("size") || 10);
+
+  const enabled = !!pharmacyId;
+  const numericPharmacyId = Number(pharmacyId);
+
+  const queryKey = ["stock", numericPharmacyId, filter, search, page, size];
 
   const { data: stock, isPending: isLoadingStock } = useQuery({
-    queryKey: ["expiry-drugs", pharmacyId, filter, page, size, search],
+    queryKey,
     queryFn: () =>
       getSearchPharmacy({
-        pharmacyId: Number(pharmacyId),
+        pharmacyId: numericPharmacyId,
         query: search,
         filter,
         page,
         size,
       }),
-    enabled: !!pharmacyId,
+    enabled,
   });
 
+  const isLast = !stock || stock.length < size;
+
   useEffect(() => {
-    queryClient.prefetchQuery({
-      queryKey: ["expiry-drugs"]
-    })
-  }, [])
+    if (!isLast && enabled) {
+      queryClient.prefetchQuery({
+        queryKey: ["stock", numericPharmacyId, filter, search, page + 1, size],
+        queryFn: () =>
+          getSearchPharmacy({
+            pharmacyId: numericPharmacyId,
+            query: search,
+            filter,
+            page: page + 1,
+            size,
+          }),
+      });
+    }
+  }, [isLast, enabled, queryClient, numericPharmacyId, filter, search, page, size]);
+
+  // TODO: featching both next and current again on rerender.
+
+
 
   return (
     <>
@@ -70,7 +91,7 @@ const Inventory = () => {
             manualFiltering: true,
           }}
         />
-        <CustomPagination className="mt-4 self-start" />
+        <CustomPagination className="mt-4 self-start" isLast={isLast} />
       </div>
     </>
   );

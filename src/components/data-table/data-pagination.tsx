@@ -1,20 +1,24 @@
-import { 
-  Pagination as UIPagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationLink, 
-  PaginationPrevious, 
-  PaginationNext, 
-  PaginationEllipsis 
+import {
+  Pagination as UIPagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
 } from "../ui/pagination";
 import { useSearchParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
-type CustomPaginationProps = {
+interface CustomPaginationProps {
   className?: string;
-};
+  isLast: boolean;
+}
 
-export const CustomPagination = ({ className }: CustomPaginationProps) => {
+export const CustomPagination = ({
+  className,
+  isLast,
+}: CustomPaginationProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page") || "0", 10);
@@ -33,14 +37,19 @@ export const CustomPagination = ({ className }: CustomPaginationProps) => {
   };
 
   const handleNext = () => {
-    goToPage(page + 1);
+    if (!isLast) {
+      goToPage(page + 1);
+    }
   };
 
   return (
     <UIPagination className={cn("", className)}>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={handlePrevious} />
+          <PaginationPrevious
+            onClick={handlePrevious}
+            isActive={!(page === 0)}
+          />
         </PaginationItem>
         <PaginationItem>
           <PaginationLink onClick={() => goToPage(0)} isActive={page === 0}>
@@ -51,7 +60,7 @@ export const CustomPagination = ({ className }: CustomPaginationProps) => {
           <PaginationEllipsis />
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={handleNext} />
+          <PaginationNext onClick={handleNext} isActive={!isLast} />
         </PaginationItem>
       </PaginationContent>
     </UIPagination>

@@ -3,6 +3,7 @@ import { useGetAllReceipts } from "@/pages/dashboard/sales/api/queries";
 import { columns } from "../receipts-columns";
 import ReceiptsFilters from "./ReceiptsFilters";
 import { useSearchParams } from "react-router-dom";
+import { CustomPagination } from "@/components/data-table/data-pagination";
 
 const Receipts = () => {
   const [searchParams] = useSearchParams();
@@ -23,15 +24,11 @@ const Receipts = () => {
     ? Number(searchParams.get("shift_id"))
     : undefined;
 
-  const status = searchParams.get("status") || ""; // Default to an empty string if not found
+  const status = searchParams.get("status") || "";
 
   const from_date = searchParams.get("from_date") ?? undefined;
 
   const to_date = searchParams.get("to_date") ?? undefined;
-
-  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 0; // Default value 0 if not found
-
-  const size = searchParams.get("size") ? Number(searchParams.get("size")) : 10; // Default value 10 if not found
 
   console.log(shift_id);
 
@@ -39,10 +36,8 @@ const Receipts = () => {
     cashier_id,
     drug_id,
     from_date,
-    page,
     pharmacy_id,
     shift_id,
-    size,
     to_date,
     status,
   });
@@ -59,6 +54,7 @@ const Receipts = () => {
             manualFiltering: true,
           }}
         />
+        <CustomPagination className="mt-4" />
       </div>
     </>
   );

@@ -1,4 +1,5 @@
 import { AxiosInstance } from "@/lib/axios";
+import { Receipt } from "../receipts.types";
 
 const BASE_URL = "/api/v1/receipts";
 
@@ -18,7 +19,7 @@ type GetAllReceiptsParams = {
 };
 
 export const getAllReceipts = async (params: GetAllReceiptsParams = {}) => {
-  return (await AxiosInstance.get(`${BASE_URL}/filter`, { params })).data;
+  return (await AxiosInstance.get<Receipt[]>(`${BASE_URL}/filter`, { params })).data;
 };
 
 type ReportsFilters = {

@@ -63,52 +63,44 @@ export const usePrefetchExpiryPage = () => {
   };
 };
 
-interface UsePaginatedQueryProps<T> {
-  queryKey: (page: number) => any[];
-  queryFn: (page: number, filters?: Record<string, any>) => Promise<T[]>;
+
+type PrefetchPaginatedOptions<TParams> = {
+  queryKeyBase: unknown[];
   page: number;
   size: number;
-  filters?: Record<string, any>;
   enabled?: boolean;
-}
+  getQueryFn: (page: number) => () => Promise<any>;
+  getQueryKey: (page: number) => unknown[];
+  dependencies?: any[];
+};
 
-export function usePaginatedQuery<T>({
-  queryKey,
-  queryFn,
+export function usePrefetchPaginated<TParams>({
+  queryKeyBase,
   page,
   size,
-  filters,
   enabled = true,
-}: UsePaginatedQueryProps<T>) {
+  getQueryFn,
+  getQueryKey,
+  dependencies = [],
+}: PrefetchPaginatedOptions<TParams>) {
   const queryClient = useQueryClient();
 
-  const { data, isPending: isLoading } = useQuery<T[]>({
-    queryKey: queryKey(page),
-    queryFn: () => queryFn(page, filters),
-    enabled,
-  });
-
-  const isFinalPage = !!data && data.length < size;
-
   useEffect(() => {
-    if (!enabled || isFinalPage) return;
+    if (!enabled) return;
 
+    // Prefetch next page
     queryClient.prefetchQuery({
-      queryKey: queryKey(page + 1),
-      queryFn: () => queryFn(page + 1, filters),
+      queryKey: getQueryKey(page + 1),
+      queryFn: getQueryFn(page + 1),
     });
 
     if (page > 0) {
       queryClient.prefetchQuery({
-        queryKey: queryKey(page - 1),
-        queryFn: () => queryFn(page - 1, filters),
+        queryKey: getQueryKey(page - 1),
+        queryFn: getQueryFn(page - 1),
       });
     }
-  }, [enabled, page, size, filters, queryClient, isFinalPage, queryKey, queryFn]);
-
-  return {
-    data,
-    isLoading,
-    isFinalPage,
-  };
+  }, [queryKeyBase, page, size, enabled, queryClient, getQueryKey, getQueryFn]);
 }
+
+  

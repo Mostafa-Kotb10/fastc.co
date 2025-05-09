@@ -5,6 +5,8 @@ import {
   CreatePharmacyValues,
   EditPharmacyValues,
 } from "@/pages/dashboard/pharmacy/lib/pharmacy-schema";
+import { Drug } from "@/types/drug.types";
+import { InventoryItem } from "@/constants/constants";
 
 const END_POINTS = {
   base: "/api/v1/pharmacies",
@@ -36,7 +38,7 @@ export const getSearchPharmacy = async ({
     size,
   };
 
-  const { data } = await AxiosInstance.get(
+  const { data } = await AxiosInstance.get<InventoryItem[]>(
     `${END_POINTS.base}/${pharmacyId}/drugs/search`,
     { params },
   );

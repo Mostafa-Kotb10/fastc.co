@@ -321,11 +321,6 @@ export const sidebarLinks: SidebarLink[] = [
     icon: FiTrendingUp,
   },
   {
-    title: "Reports",
-    path: "reports",
-    icon: FiShoppingCart,
-  },
-  {
     title: "Expiry Warning",
     path: "expiry-warning",
     icon: FiCalendar,

@@ -8,7 +8,7 @@ import RequireSignUp from "@/components/auth/RequireSignUp";
 const Home = lazy(() => import("@/pages/home/Home"));
 const SignPortal = lazy(() => import("./sign-portal/portal/SignPortal"));
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
-const Inventory = lazy(() => import("./dashboard/inventory/Inventory"));
+const Inventory = lazy(() => import("./dashboard/inventory"));
 const Onboarding = lazy(() => import("./sign-portal/configuration/onboarding"));
 const PickPharmacy = lazy(() => import("@/pages/pick-pharmacy/PickPharmacy"));
 const PharmacyPage = lazy(() => import("./dashboard/pharmacy"));
