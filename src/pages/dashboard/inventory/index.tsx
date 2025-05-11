@@ -100,6 +100,7 @@ const Inventory = () => {
             manualFiltering: true,
           }}
         />
+        
         <CustomPagination className="mt-4 self-start" isLast={isLast} />
       </div>
     </>

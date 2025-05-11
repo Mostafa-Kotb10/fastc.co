@@ -10,7 +10,7 @@ import onboardingSrc from "@/assets/images/onboarding.png";
 import { Spinner } from "../../components/Spinner";
 import CreatePharmacyDialog from "./CreatePharmacyDialog";
 import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
-import  PharmacyItem  from "../dashboard/pharmacy/components/PharmacyItem";
+import PharmacyItem from "../dashboard/pharmacy/components/PharmacyItem";
 
 const PickPharmacy = () => {
   const { data: pharmacies, isPending } = useGetUserPharmacies();

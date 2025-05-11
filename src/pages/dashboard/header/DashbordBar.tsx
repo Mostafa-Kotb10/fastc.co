@@ -34,8 +34,4 @@ const DashbordBar = () => {
   );
 };
 
-/* <Button className="group relative flex w-fit cursor-pointer items-center gap-1 rounded-sm bg-emerald-600 shadow-xl hover:bg-emerald-700">
-              Sign Out
-            </Button> */
-
 export default DashbordBar;

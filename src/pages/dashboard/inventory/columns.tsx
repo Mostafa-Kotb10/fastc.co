@@ -49,7 +49,7 @@ export const columns: ColumnDef<InventoryItem>[] = [
     cell: ({ cell }) => (
       <div className="space-x-0.5">
         <span>{cell.getValue() as number}</span>
-        <span>$</span>
+        <span>LE</span>
       </div>
     ),
     meta: {

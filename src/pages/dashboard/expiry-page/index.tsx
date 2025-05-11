@@ -8,8 +8,6 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
 import { CustomPagination } from "@/components/data-table/data-pagination";
-import { useEffect } from "react";
-import { queryClient } from "@/queryClient";
 import { usePrefetchPaginated } from "./api/queries";
 
 const ExpiryPage = () => {

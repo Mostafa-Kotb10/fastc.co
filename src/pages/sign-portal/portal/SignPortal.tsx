@@ -8,11 +8,23 @@ import Logo from "@/components/Logo";
 import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { Link } from "react-router-dom";
 
+import signInImageSrc from "@/assets/images/sign-image.png";
+import signUpImageSrc from "@/assets/images/sign-up.png";
+
 const SignPortal = () => {
   const { portal } = useSignPortalContext();
 
   return (
     <div className="relative flex h-screen items-center justify-center overflow-hidden bg-gray-100">
+      {portal === "sign-in" ? (
+        <div>
+          <img src={signUpImageSrc} />
+        </div>
+      ) : (
+        <div>
+          <img src={signInImageSrc} />
+        </div>
+      )}
       <AnimatePresence mode="wait">
         <motion.div
           key={portal}

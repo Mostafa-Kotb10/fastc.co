@@ -56,9 +56,12 @@ export const useSignUp = () => {
 export const useSignIn = () => {
   const { setTokens } = useAuthV2();
   const { setItem, removeItem } = useLocalStorage("tokens");
+  const { getItem } = useLocalStorage("i");
   const { setIsSignedIn } = useSignInStore();
 
   const navigate = useNavigate();
+
+  const pharmacyId = getItem();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: (data: SignInValues) => signIn(data),
@@ -88,7 +91,11 @@ export const useSignIn = () => {
         }
 
         if (user.role === "OWNER") {
-          navigate("/pick-pharmacy");
+          if (pharmacyId) {
+            navigate(`/dashboard/${pharmacyId}`);
+          } else {
+            navigate("/pick-pharmacy");
+          }
         }
 
         toast.success("Welcome");

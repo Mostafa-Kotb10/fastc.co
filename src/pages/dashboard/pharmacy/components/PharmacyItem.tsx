@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { ResponsiveDialogV2 } from "@/components/ResponsiveDialog";
 import DeletePharmcay from "./DeletePharmacy";
 import EditPharmacyForm from "./EditPharmacyForm";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type PharmacyItemProps =
   | {
@@ -31,11 +32,13 @@ type PharmacyItemProps =
 
 const PharmacyItem = (props: PharmacyItemProps) => {
   const { pharmacy, withDialog } = props;
+  const { setItem } = useLocalStorage("i");
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
   const isActive = Number(pharmacyId) === pharmacy.id;
   const navigate = useNavigate();
 
   const handleNavigate = () => {
+    setItem(pharmacy.id);
     navigate(`/dashboard/${pharmacy.id}/`, {
       replace: true,
     });

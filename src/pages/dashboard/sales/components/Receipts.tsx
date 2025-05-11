@@ -3,6 +3,7 @@ import { useGetAllReceipts } from "@/pages/dashboard/sales/api/queries";
 import { columns } from "../receipts-columns";
 import ReceiptsFilters from "./ReceiptsFilters";
 import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 import { CustomPagination } from "@/components/data-table/data-pagination";
 
 const Receipts = () => {
@@ -30,9 +31,7 @@ const Receipts = () => {
 
   const to_date = searchParams.get("to_date") ?? undefined;
 
-  console.log(shift_id);
-
-  const { receipts, isLoading } = useGetAllReceipts({
+  const { receipts, isLoading, isLast } = useGetAllReceipts({
     cashier_id,
     drug_id,
     from_date,
@@ -54,7 +53,7 @@ const Receipts = () => {
             manualFiltering: true,
           }}
         />
-        <CustomPagination className="mt-4" />
+        <CustomPagination className="mt-4" isLast={isLast} />
       </div>
     </>
   );

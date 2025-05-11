@@ -17,7 +17,6 @@ const ReceiptsFilters = () => {
       <IDSearchInput className="w-full" />
       <div className="flex gap-2">
         <div className="md:hidden">
-          {/* Render dialog (modal) on small screens */}
           <Dialog modal>
             <DialogTrigger asChild>
               <Button variant="outline">

@@ -22,7 +22,7 @@ createRoot(document.getElementById("root")!).render(
       <AuthProviderV2>
         <App />
       </AuthProviderV2>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <Toaster
         position="top-center"
         icons={{

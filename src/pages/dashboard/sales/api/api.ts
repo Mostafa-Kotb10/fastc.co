@@ -1,5 +1,5 @@
 import { AxiosInstance } from "@/lib/axios";
-import { Receipt } from "../receipts.types";
+import { Receipt, ReportItem } from "../sales.types";
 
 const BASE_URL = "/api/v1/receipts";
 
@@ -19,20 +19,38 @@ type GetAllReceiptsParams = {
 };
 
 export const getAllReceipts = async (params: GetAllReceiptsParams = {}) => {
-  return (await AxiosInstance.get<Receipt[]>(`${BASE_URL}/filter`, { params })).data;
+  return (await AxiosInstance.get<Receipt[]>(`${BASE_URL}/filter`, { params }))
+    .data;
 };
 
-type ReportsFilters = {
+type ReportsProps = {
+  pharmacyId: number;
   drug_id?: number;
   page?: number; // default 0
-  size?: number; // default 10
+  size?: number; // default 10p
+  status?: string;
+  search?: string;
 };
 
-export const getAllReports = async (
-  params: ReportsFilters,
-  pharmacyId: number,
-) => {
-  return await AxiosInstance.get(`/api/v1/pharmacies/${pharmacyId}/reports`, {
-    params,
-  });
+export const getAllReports = async ({
+  pharmacyId,
+  drug_id,
+  page,
+  size,
+  status,
+  search,
+}: ReportsProps) => {
+  return (
+    await AxiosInstance.get<ReportItem[]>(
+      `/api/v1/pharmacies/${pharmacyId}/reports`,
+      {
+        params: {
+          drug_id,
+          page,
+          size,
+          status,
+        },
+      },
+    )
+  ).data;
 };

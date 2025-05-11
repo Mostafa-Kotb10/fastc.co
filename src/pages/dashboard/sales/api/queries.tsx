@@ -36,12 +36,12 @@ export const useGetAllReceipts = (params: GetAllReceiptsParams) => {
   const page = Number(searchParam.get("page")) || 0;
   const size = Number(searchParam.get("size")) || 10;
 
-  const paginatedPrams = useMemo(
-    () => ({
-      ...params, page, size
-    }),
+  const paginatedParams = useMemo(
+    () => ({ ...params, page, size }),
     [params, page, size]
   );
+
+  const queryKey = ["receipts", paginatedParams];
 
   const {
     data,
@@ -49,26 +49,33 @@ export const useGetAllReceipts = (params: GetAllReceiptsParams) => {
     error,
     isFetching,
   } = useQuery({
-    queryKey: ["receipts", paginatedPrams],
-    queryFn: () => getAllReceipts(paginatedPrams),
+    queryKey,
+    queryFn: () => getAllReceipts(paginatedParams),
+    staleTime: 1000 * 60 * 5, // Optional, prevents excessive re-fetches
   });
 
   const isLast = !data || data.length < size;
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!isLast) {
       const nextPageParams = { ...params, page: page + 1, size };
-      queryClient.prefetchQuery({
-        queryKey: ["receipts", nextPageParams],
-        queryFn: () => getAllReceipts(nextPageParams),
-      });
+      const nextPageKey = ["receipts", nextPageParams];
+
+      if (!queryClient.getQueryData(nextPageKey)) {
+        queryClient.prefetchQuery({
+          queryKey: nextPageKey,
+          queryFn: () => getAllReceipts(nextPageParams),
+          staleTime: 1000 * 60 * 5,
+        });
+      }
     }
-  },[isLast, page, params, queryClient, size])
+  }, [isLast, page, params, queryClient, size]);
 
   return {
     receipts: data || [],
     isLoading,
     isFetching,
     error,
+    isLast,
   };
 };

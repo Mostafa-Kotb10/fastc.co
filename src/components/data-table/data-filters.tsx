@@ -31,7 +31,13 @@ export const ClearFiltersButton = () => {
   return <Button onClick={clearParams}>Clear Filters</Button>;
 };
 
-export const SearchInput = ({ className }: { className?: string }) => {
+export const SearchInput = ({
+  className,
+  showIcon = true,
+}: {
+  className?: string;
+  showIcon?: boolean;
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
@@ -56,12 +62,17 @@ export const SearchInput = ({ className }: { className?: string }) => {
   }, [debouncedVal, setSearchParams]);
 
   return (
-    <Input
-      className={className}
-      onChange={(e) => setQuery(e.target.value)}
-      value={query}
-      placeholder="Search a term.."
-    />
+    <div className={cn("relative w-[400px]", className)}>
+      <Input
+        className="w-full"
+        onChange={(e) => setQuery(e.target.value)}
+        value={query}
+        placeholder="Search a term.."
+      />
+      {showIcon && (
+        <SearchIcon className="absolute top-1/2 right-2 size-4 -translate-y-1/2 text-gray-500/50" />
+      )}
+    </div>
   );
 };
 
@@ -130,7 +141,7 @@ type FilterProps = {
 export const SelectFilter = ({
   filters,
   label,
-  param ="filter",
+  param = "filter",
 }: FilterProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selected = searchParams.get(param) || ""; // Default to empty string if no value exists
