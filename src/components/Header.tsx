@@ -5,7 +5,6 @@ import { FaBars } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
-import { useGetMe } from "@/services/user/queries";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 import Logo from "./Logo";
@@ -66,7 +65,7 @@ const Header = () => {
         )}
 
         <div className="hidden md:block">
-          {user ? (
+          {user && !isLoadingUser ? (
             <div className="flex justify-end">
               <Button
                 asChild

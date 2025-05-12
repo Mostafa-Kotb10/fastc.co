@@ -35,7 +35,7 @@ interface EditEmployeeProps {
 const EditEmployeeForm = ({ employee, setIsOpen }: EditEmployeeProps) => {
   const { user, age, gender, salary, shift } = employee;
   const { shifts, isLoadingShifts } = usePharmacyShifts();
-  const { editEmployee, isEditingEmployee } = useEditEmployee();
+  const { editEmployee } = useEditEmployee();
 
   const form = useForm<EditEmployeeValues>({
     resolver: zodResolver(editEmployeeSchema),

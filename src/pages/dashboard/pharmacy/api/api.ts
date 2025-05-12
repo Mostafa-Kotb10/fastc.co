@@ -5,7 +5,7 @@ import {
   CreatePharmacyValues,
   EditPharmacyValues,
 } from "@/pages/dashboard/pharmacy/lib/pharmacy-schema";
-import { Drug } from "@/types/drug.types";
+
 import { InventoryItem } from "@/constants/constants";
 
 const END_POINTS = {

@@ -24,16 +24,16 @@ const Dashboard = () => {
   const shiftId = searchParams.get("shift_id") || "";
   const cashierId = Number(searchParams.get("cashier_id")) || undefined;
 
-  const { data: analytics, isPending: isLoadingAnalytics } = useQuery({
+  const { data: analytics } = useQuery({
     queryKey: ["analytics", pharmacyId, fromDate, toDate, shiftId, cashierId],
     queryFn: () =>
       getAnalytics(Number(pharmacyId), {
         fromDate,
         toDate,
         shiftId,
-        cashierId
+        cashierId,
       }),
-      staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
   });
 
   return (
@@ -66,7 +66,16 @@ const Dashboard = () => {
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <EmployeeChart analytics={analytics} />
-        <ProfitRevenuePieChart analytics={analytics || []} />
+        <ProfitRevenuePieChart
+          analytics={
+            analytics || {
+              profit: 0,
+              revenue: 0,
+              numberOfReceipts: 0,
+              medianReceipt: 0,
+            }
+          }
+        />
       </div>
       <ProfitRevenueCustomerChart />
     </>

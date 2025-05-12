@@ -36,8 +36,8 @@ export const CreateShiftComponent = () => {
   const onSubmit = (data: ShiftValues) => {
     const newShift: ShiftValues = {
       name: data.name,
-      startTime: { hour: data.startTime.hour },
-      endTime: { hour: data.endTime.hour },
+      startTime: { hour: data.startTime?.hour },
+      endTime: { hour: data.endTime?.hour },
     };
     setShifts((prev) => [...prev, newShift]);
     form.reset();

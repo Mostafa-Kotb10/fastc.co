@@ -19,7 +19,6 @@ interface CustomPaginationProps {
 export const CustomPagination = ({
   className,
   isLast,
-  totalCount,
 }: CustomPaginationProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 

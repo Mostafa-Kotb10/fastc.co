@@ -3,7 +3,6 @@ import { useGetAllReceipts } from "@/pages/dashboard/sales/api/queries";
 import { columns } from "../receipts-columns";
 import ReceiptsFilters from "./ReceiptsFilters";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 import { CustomPagination } from "@/components/data-table/data-pagination";
 
 const Receipts = () => {

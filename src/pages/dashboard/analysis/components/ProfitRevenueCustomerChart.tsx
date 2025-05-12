@@ -62,7 +62,6 @@ export function ProfitRevenueCustomerChart() {
     })),
   });
 
-  const isLoading = analyticsQueries.some((q) => q.isLoading);
 
   const chartData = monthlyRanges.map((range, index) => {
     const data = analyticsQueries[index].data;

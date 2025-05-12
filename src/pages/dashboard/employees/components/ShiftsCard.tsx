@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { usePharmacyShifts } from "@/pages/dashboard/pharmacy/api/queries";
-import ShiftItem, { ShiftItemWithContext } from "../../pharmacy/components/ShiftItem";
+import { ShiftItemWithContext } from "../../pharmacy/components/ShiftItem";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDeleteShift } from "@/pages/dashboard/pharmacy/api/mutations";

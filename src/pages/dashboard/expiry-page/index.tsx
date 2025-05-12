@@ -5,21 +5,21 @@ import {
 import { DataTable } from "@/components/data-table/data-table";
 import { columns } from "./columns";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
 import { CustomPagination } from "@/components/data-table/data-pagination";
-import { usePrefetchPaginated } from "./api/queries";
 import DashboardHeader from "../components/DashboardHeader";
+import { useEffect } from "react";
 
 const ExpiryPage = () => {
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const search = searchParams.get("search") ?? "";
   const filter = searchParams.get("filter") ?? "EXPIRED";
   const page = Number(searchParams.get("page") ?? 0);
   const size = Number(searchParams.get("size") ?? 75);
-
   const { data: drugs, isPending: isLoadingDrugs } = useQuery({
     queryKey: ["expiry-drugs", pharmacyId, filter, page, size, search],
     queryFn: () =>
@@ -31,55 +31,38 @@ const ExpiryPage = () => {
         size,
       }),
     enabled: !!pharmacyId,
+    staleTime: 1000 * 60 * 5,
   });
 
-  usePrefetchPaginated({
-    queryKeyBase: ["expiry-drugs", pharmacyId, filter, page, size, search],
-    page,
-    size,
-    enabled: !!pharmacyId,
-    dependencies: [pharmacyId, filter, search],
-    getQueryKey: (pg) => ["expiry-drugs", pharmacyId, filter, pg, size, search],
-    getQueryFn: (pg) => () =>
-      getSearchPharmacy({
-        pharmacyId: Number(pharmacyId),
-        query: search,
+  const isLast = !drugs || drugs.length < size;
+
+  useEffect(() => {
+    if (!!pharmacyId && !isLast) {
+      const nextPageKey = [
+        "expiry-drugs",
+        pharmacyId,
         filter,
-        page: pg,
+        page + 1,
         size,
-      }),
-  });
+        search,
+      ];
 
-  // useEffect(() => {
-  //   if (!pharmacyId) return;
-
-  //   // Prefetch next page
-  //   queryClient.prefetchQuery({
-  //     queryKey: ["expiry-drugs", pharmacyId, filter, page + 1, size, search],
-  //     queryFn: () =>
-  //       getSearchPharmacy({
-  //         pharmacyId: Number(pharmacyId),
-  //         query: search,
-  //         filter,
-  //         page: page + 1,
-  //         size,
-  //       }),
-  //   });
-
-  //   if (page > 0) {
-  //     queryClient.prefetchQuery({
-  //       queryKey: ["expiry-drugs", pharmacyId, filter, page - 1, size, search],
-  //       queryFn: () =>
-  //         getSearchPharmacy({
-  //           pharmacyId: Number(pharmacyId),
-  //           query: search,
-  //           filter,
-  //           page: page - 1,
-  //           size,
-  //         }),
-  //     });
-  //   }
-  // }, [pharmacyId, filter, search, page, size]);
+      if (!queryClient.getQueryData(nextPageKey)) {
+        queryClient.prefetchQuery({
+          queryKey: nextPageKey,
+          queryFn: () =>
+            getSearchPharmacy({
+              pharmacyId: Number(pharmacyId),
+              query: search,
+              filter,
+              page: page + 1,
+              size,
+            }),
+          staleTime: 1000 * 60 * 5,
+        });
+      }
+    }
+  }, [page, isLast, pharmacyId, filter, search, size]);
 
   return (
     <>
@@ -103,7 +86,7 @@ const ExpiryPage = () => {
           columns={columns}
           isLoading={isLoadingDrugs}
         />
-        <CustomPagination className="mt-3" />
+        <CustomPagination className="mt-3" isLast={isLast} />
       </div>
     </>
   );

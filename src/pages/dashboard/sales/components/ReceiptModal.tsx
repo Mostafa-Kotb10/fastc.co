@@ -9,7 +9,9 @@ import {
 } from "@/components/ui/dialog"; // Assuming Shadcn
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Receipt } from "@/pages/dashboard/sales/receipts.types";
+import { Receipt } from "../sales.types";
+// import { Receipt } from "@/pages/dashboard/sales/receipts.types";
+
 
 interface ReceiptModalProps {
   receipt: Receipt;

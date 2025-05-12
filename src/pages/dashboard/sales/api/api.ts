@@ -38,7 +38,6 @@ export const getAllReports = async ({
   page,
   size,
   status,
-  search,
 }: ReportsProps) => {
   return (
     await AxiosInstance.get<ReportItem[]>(

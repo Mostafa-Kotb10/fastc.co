@@ -1,7 +1,7 @@
 import { PharmacyEmployee } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { ColumnDef } from "@tanstack/react-table";
 import DataTableRowActions from "./components/DataTableRowActions";
-import { Employee } from "@/pages/dashboard/employees/employee.types";
+
 
 interface EmployeeDataColumnsProps {
   onEdit: (data: any) => void;
@@ -9,9 +9,8 @@ interface EmployeeDataColumnsProps {
 }
 
 export const getEmployeeDataColumns = ({
-  onEdit,
   onDelete,
-}): ColumnDef<PharmacyEmployee>[] => [
+}: EmployeeDataColumnsProps): ColumnDef<PharmacyEmployee>[] => [
   {
     header: "id",
     accessorKey: "user.id",
@@ -48,7 +47,7 @@ export const getEmployeeDataColumns = ({
   {
     id: "actions",
     cell: ({ row }) => (
-      <DataTableRowActions row={row} onEdit={onEdit} onDelete={onDelete} />
+      <DataTableRowActions row={row}  onDelete={onDelete} />
     ),
     size: 50,
   },

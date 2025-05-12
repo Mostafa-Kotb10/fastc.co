@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { Receipt, ReceiptItem } from "@/pages/dashboard/sales/receipts.types";
 import ReceiptModal from "./components/ReceiptModal";
+import { Receipt, ReceiptItem } from "./sales.types";
 
 export const columns: ColumnDef<Receipt>[] = [
   {

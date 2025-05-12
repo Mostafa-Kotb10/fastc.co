@@ -11,65 +11,68 @@ const FrequentlyAsked = () => {
       <div className="section-container grid grid-cols-2 gap-10">
         <div className="flex flex-col">
           <h2 className="text-4xl font-bold text-cyan-700">
-            Got Questions? We’ve Got Answers!
+            Got Questions? We&rsquo;ve Got Answers!
           </h2>
-          <p className=" mt-2 max-w-md text-base text-gray-600">
+          <p className="mt-2 max-w-md text-base text-gray-600">
             Everything you need to know about making your pharmacy faster,
             smarter, and stress-free with FastAF.
           </p>
         </div>
 
-        <div className=" rounded-sm border-2 border-gray-100 p-5 ">
+        <div className="rounded-sm border-2 border-gray-100 p-5">
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
-                How do I manage prescriptions in FastAF?
+                How do I scan a drug without a barcode?
               </AccordionTrigger>
               <AccordionContent>
-                FastAF allows pharmacies to track, refill, and verify
-                prescriptions through a secure digital interface. You can manage
-                patient records and automate reminders.
+                Our system uses your phone's camera and AI to detect drugs
+                visually. Simply point the camera and touch the drug on the
+                screen to add it to the cart. No barcode scanner is needed at
+                all.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-2">
               <AccordionTrigger>
-                Is FastAF compliant with HIPAA regulations?
+                What if my phone camera isn't working?
               </AccordionTrigger>
               <AccordionContent>
-                Yes, FastAF follows strict HIPAA compliance guidelines to ensure
-                patient data security and privacy.
+                No worries — you can still sell drugs. The app lets you search
+                by drug name. You can add it manually to the cart.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-3">
               <AccordionTrigger>
-                Can FastAF integrate with my existing pharmacy software?
+                Can I use the system for multiple branches?
               </AccordionTrigger>
               <AccordionContent>
-                FastAF supports integrations with various pharmacy management
-                systems via API, making it easy to sync data and workflows.
+                Yes, you can manage each branch separately. Each has its own
+                database and user roles. Perfect for expanding pharmacy chains.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-4">
               <AccordionTrigger>
-                How does FastAF handle insurance claims?
+                Can the system manage drug expiry automatically?
               </AccordionTrigger>
               <AccordionContent>
-                FastAF streamlines insurance claims processing by automating
-                eligibility checks, claim submissions, and tracking approvals.
+                Yes, when adding drugs to inventory, you must input the expiry
+                date. The system calculates the proper shelf order based on
+                expiry and uses it during sales. When a sale is made, the batch
+                with the closest expiry is automatically deducted first.
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-5">
               <AccordionTrigger>
-                What support is available for pharmacies using FastAF?
+                Is the system easy to set up and learn?
               </AccordionTrigger>
               <AccordionContent>
-                We offer 24/7 technical support, training resources, and
-                dedicated account managers to help pharmacies maximize their use
-                of FastAF.
+                Absolutely. It&rsquo;s designed for non-technical pharmacy workers.
+                Simple steps, intuitive UI, and helpful prompts. You&rsquo;ll get
+                started quickly without special training.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

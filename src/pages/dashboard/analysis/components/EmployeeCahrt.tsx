@@ -1,6 +1,4 @@
-"use client";
 
-import { TrendingUp } from "lucide-react";
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts";
 import {
   Card,
@@ -28,7 +26,7 @@ interface EmployeeChartProps {
 function EmployeeChart({ analytics }: EmployeeChartProps) {
   const { pharmacyId } = useParams();
   // Assuming the analytics data contains employees and receipts
-  const { employees, isLoadingEmployees } = usePharmacyEmployees({
+  const { employees} = usePharmacyEmployees({
     pharmacyId: Number(pharmacyId),
   });
   const totalEmployees = employees?.length || 0;

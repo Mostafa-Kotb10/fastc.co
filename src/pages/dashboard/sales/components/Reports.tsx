@@ -20,7 +20,7 @@ const Reports = () => {
   const status = searchParams.get("status") || "";
   const size = Number(searchParams.get("page")) || 10;
 
-  const { data: reports, isPending: isLoadingReports } = useQuery({
+  const {  isPending: isLoadingReports } = useQuery({
     queryKey: ["reports", pharmacyId, drug_id, page, size],
     queryFn: () =>
       getAllReports({

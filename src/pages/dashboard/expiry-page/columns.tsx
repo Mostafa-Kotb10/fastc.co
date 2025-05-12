@@ -1,8 +1,8 @@
+import { InventoryItem } from "@/constants/constants";
 import { sortedHeader } from "@/lib/utils";
-import { PharmacyDrug } from "@/pages/dashboard/pharmacy/pharmacy.types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns: ColumnDef<PharmacyDrug>[] = [
+export const columns: ColumnDef<InventoryItem>[] = [
   {
     header: "Name",
     accessorKey: "drug.name",
