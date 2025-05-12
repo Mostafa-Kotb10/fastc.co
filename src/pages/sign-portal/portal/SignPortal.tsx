@@ -33,7 +33,7 @@ const SignPortal = () => {
           exit={{ left: portal === "sign-in" ? "70%" : 0 }}
           transition={{ ease: "easeInOut", duration: 0.7 }}
           className={cn(
-            "absolute flex h-full flex-col items-center gap-1 rounded-lg bg-white shadow-lg",
+            "absolute flex h-full flex-col items-center gap-1  rounded-lg bg-white shadow-lg",
           )}
         >
           <Link to="/">
@@ -47,7 +47,7 @@ const SignPortal = () => {
               duration: 0.2,
               ease: "easeInOut",
             }}
-            className="w-full overflow-x-hidden overflow-y-auto px-14"
+            className="w-full overflow-x-hidden overflow-y-auto px-14 "
           >
             {portal === "sign-in" ? <SignIn /> : <SignUp />}
           </motion.div>

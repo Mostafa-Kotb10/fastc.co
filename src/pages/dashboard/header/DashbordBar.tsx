@@ -1,12 +1,12 @@
-import { useSignOut } from "@/services/auth/mutations";
+
 import CommandMenu from "./CommandMenu";
 import { CiUser } from "react-icons/ci";
 import { VscGear } from "react-icons/vsc";
-import { PiSignOut } from "react-icons/pi";
+
 import { Link } from "react-router-dom";
 
 const DashbordBar = () => {
-  const { signOut } = useSignOut();
+
 
   return (
     <div className="bg-slate-100/60">
@@ -19,10 +19,6 @@ const DashbordBar = () => {
               <Link to="/dashboard/settings">
                 <VscGear className="text-muted-foreground size-5 cursor-pointer" />
               </Link>
-              <PiSignOut
-                className="text-muted-foreground size-5 cursor-pointer"
-                onClick={signOut}
-              />
             </div>
             <div className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full bg-orange-600">
               <CiUser className="size-6 shrink-0 font-bold text-white" />

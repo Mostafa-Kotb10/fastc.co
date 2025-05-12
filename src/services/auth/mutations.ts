@@ -131,7 +131,7 @@ export const useSignOut = () => {
   const navigate = useNavigate();
 
   const signOut = () => {
-    navigate("/");
+    navigate("/", { replace: true });
     removeItem();
   };
 

@@ -36,8 +36,8 @@ const SignUp = () => {
   };
 
   return (
-    <Form {...form}>
-      <form className="w-96 space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+    <Form {...form} >
+      <form className="space-y-6 mx-8 " onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           name="username"
           control={form.control}
@@ -107,7 +107,7 @@ const SignUp = () => {
             className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-800"
             disabled={isSigningIn}
           >
-            {isSigningIn ? <Spinner /> : <span>Sign In</span>}
+            {isSigningIn ? <Spinner /> : <span>Sign Up</span>}
           </Button>
           <hr className="my-3" />
           <div className="space-y-0.5 text-center">

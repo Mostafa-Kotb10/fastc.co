@@ -34,7 +34,7 @@ const SignIn = () => {
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-6 mx-8 align-middle" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           name="username"
           control={form.control}
