@@ -1,9 +1,9 @@
 import { useAuth } from "@/store/authStore";
-import React, { Children, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { accessToken, user, loading, refresh, fetchUser, setLoading } =
+  const { accessToken, loading, refresh, fetchUser, setLoading } =
     useAuth();
   const navigate = useNavigate();
 
