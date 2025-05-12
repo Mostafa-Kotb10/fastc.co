@@ -1,13 +1,5 @@
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { ColumnDef } from "@tanstack/react-table";
-import { EyeIcon } from "lucide-react";
+
 import { ReportItem } from "./sales.types";
 import ReportModal from "./components/ReportModal";
 

@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CustomPagination } from "@/components/data-table/data-pagination";
+import DashboardHeader from "../components/DashboardHeader";
 
 const EmployeesPage = () => {
   const { pharmacyId } = useParams();
@@ -61,7 +62,7 @@ const EmployeesPage = () => {
 
   return (
     <>
-      <h3 className="mt-6 text-3xl font-bold">Employees Page</h3>
+      <DashboardHeader>Employees Page</DashboardHeader>
       <div className="mt-10 space-y-10">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <ShiftsCard />

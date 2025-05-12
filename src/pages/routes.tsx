@@ -4,6 +4,7 @@ import AppLayout from "../components/AppLayout";
 import { SignPortalProvider } from "../context/SignPortalContext";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 import RequireSignUp from "@/components/auth/RequireSignUp";
+import Dashboard from "./dashboard/analysis/Dashboard";
 
 const Home = lazy(() => import("@/pages/home/Home"));
 const SignPortal = lazy(() => import("./sign-portal/portal/SignPortal"));
@@ -41,7 +42,8 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            index: true
+            index: true,
+            element: <Dashboard />
           },
           {
             path: "inventory",

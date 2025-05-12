@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
 import { CustomPagination } from "@/components/data-table/data-pagination";
 import { usePrefetchPaginated } from "./api/queries";
+import DashboardHeader from "../components/DashboardHeader";
 
 const ExpiryPage = () => {
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
@@ -82,7 +83,7 @@ const ExpiryPage = () => {
 
   return (
     <>
-      <h1 className="mt-10 text-4xl font-bold">Expiry Page</h1>
+      <DashboardHeader>Expiry Page</DashboardHeader>
       <div className="mt-10">
         <div className="flex justify-between">
           <SearchInput className="mb-3 max-w-[30rem]" />

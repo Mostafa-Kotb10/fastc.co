@@ -5,11 +5,9 @@ import { useSidebarContext } from "@/hooks/useSidebarContext";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { IconType } from "react-icons";
-import {  FiSidebar } from "react-icons/fi";
+import { FiSidebar } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { PiSignOut } from "react-icons/pi";
-import { useSignOut } from "@/services/auth/mutations";
 
 const Sidebar = () => {
   return (
@@ -54,19 +52,18 @@ const SidebarContainer = () => {
   return (
     <motion.nav
       ref={sidebarRef}
-      className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 h-screen shrink-0 border-r border-slate-300 bg-cyan-950 p-2"
-      layout
+      className="pointer-events-auto fixed left-0 z-10 h-screen shrink-0 border-r border-slate-300 bg-cyan-950 p-2"
       style={{
         width: isOpen ? "225px" : "fit-content",
+        height: "100vh",
       }}
     >
       <TitleSection />
-      <div className="flex w-full flex-col gap-1">
+      <motion.div className="flex w-full flex-col gap-1">
         {sidebarLinks.map(({ title, path, icon: Icon }) => (
           <Option key={path} title={title} path={path} Icon={Icon} />
         ))}
-      </div>
-      <SidebarFooter />
+      </motion.div>
     </motion.nav>
   );
 };
@@ -85,21 +82,18 @@ const Option = ({ title, path, Icon }: OptionProps) => {
   return (
     <Link to={path}>
       <motion.button
-        layout // New
         className={cn(
           "group relative flex h-10 w-full cursor-pointer items-center transition-colors hover:bg-white",
         )}
         onClick={() => setActive(title)}
       >
         <motion.div
-          layout
           className={cn(
             "absolute inset-0 -z-10 h-full text-white",
             isActive && "bg-white",
           )}
         />
         <motion.div
-          layout
           className={cn(
             "pointer-events-none grid h-full w-10 place-content-center text-lg text-white group-hover:text-black",
             isActive && "text-black",
@@ -109,7 +103,6 @@ const Option = ({ title, path, Icon }: OptionProps) => {
         </motion.div>
         {isOpen && (
           <motion.span
-            layout
             className={cn(
               "text-sm text-white group-hover:text-black",
               isActive && "text-black",
@@ -136,11 +129,10 @@ const TitleSection = () => {
   const { isOpen, toggleSidebar } = useSidebarContext();
 
   return (
-    <motion.div layout className="mb-3 border-b border-slate-300 pb-3">
+    <motion.div className="mb-3 border-b border-slate-300 pb-3">
       <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors">
         {isOpen && (
           <motion.div
-            layout
             initial={{
               opacity: 0,
             }}
@@ -152,7 +144,6 @@ const TitleSection = () => {
             }}
           >
             <motion.div
-              layout
               initial={{
                 opacity: 0,
               }}
@@ -170,7 +161,6 @@ const TitleSection = () => {
           </motion.div>
         )}
         <motion.div
-          layout
           className="grid size-10 place-content-center"
           onClick={toggleSidebar}
         >
@@ -181,37 +171,5 @@ const TitleSection = () => {
   );
 };
 
-const SidebarFooter = () => {
-  const { signOut } = useSignOut();
-  const { isOpen } = useSidebarContext();
-
-  return (
-    <div className="absolute bottom-0 left-0 w-full p-2">
-      <motion.button
-        layout
-        className="group relative flex h-10 w-full cursor-pointer items-center transition-colors hover:bg-white"
-        onClick={signOut}
-      >
-        <motion.div
-          layout
-          className="grid h-full w-10 place-content-center text-lg text-white group-hover:text-black"
-        >
-          <PiSignOut className="size-5 " />
-        </motion.div>
-        {isOpen && (
-          <motion.span
-            layout
-            className="ml-2 text-sm text-white group-hover:text-black"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            Sign out
-          </motion.span>
-        )}
-      </motion.button>
-    </div>
-  );
-};
-
 export default Sidebar;
+
