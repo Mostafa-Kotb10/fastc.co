@@ -27,7 +27,7 @@ export const useSignUp = () => {
       console.log("response-data: ", data);
       setItem(data.jwt);
       setTokens(data.jwt);
-      navigate("sign-portal?portal=sign-up");
+      navigate("sign-portal?portal=sign-up", { replace: true });
       toast.success("Account created successfully!");
     },
     onError: (error) => {
@@ -90,8 +90,8 @@ export const useSignIn = () => {
           const pharmacies: Pharmacy[] = (
             await SignInstance.get("/api/v1/users/pharmacy")
           ).data;
-          
-          navigate(`/dashboard/${pharmacies[0].id}`);
+
+          navigate(`/dashboard/${pharmacies[0].id}`, { replace: true });
         }
 
         if (user.role === "OWNER") {
@@ -100,9 +100,9 @@ export const useSignIn = () => {
               queryKey: ["pharmacy", pharmacyId],
               queryFn: () => getPharmacyDetails(Number(pharmacyId)),
             });
-            navigate(`/dashboard/${pharmacyId}`);
+            navigate(`/dashboard/${pharmacyId}`, { replace: true });
           } else {
-            navigate("/pick-pharmacy");
+            navigate("/pick-pharmacy", { replace: true });
           }
         }
 

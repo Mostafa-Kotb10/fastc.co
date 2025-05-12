@@ -4,7 +4,13 @@ import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+
+import { useGetMe } from "@/services/user/queries";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+
 import Logo from "./Logo";
+import { useQuery } from "@tanstack/react-query";
+import { getUser } from "@/services/auth/api";
 
 const variants: Variants = {
   initial: {
@@ -21,6 +27,14 @@ const variants: Variants = {
 const Header = () => {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const { getItem } = useLocalStorage("i");
+
+  const { data: user, isPending: isLoadingUser } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+    enabled: !!getItem(),
+  });
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest < 50) {
@@ -46,54 +60,40 @@ const Header = () => {
         </div> */}
 
         {isScrolled ? (
-          <Logo  className="w-[90px]" />
+          <Logo className="w-[90px]" />
         ) : (
           <Logo type="black" className="w-[90px]" />
         )}
 
-        {/* <motion.nav
-          className={`hidden place-content-center justify-items-center md:block`}
-          variants={variants}
-          initial="hidden"
-          animate={isScrolled ? "visible" : "hidden"}
-        >
-          <ul className="flex items-center gap-5 text-[15px]">
-            <li className="cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:text-cyan-700">
-              Home
-            </li>
-            <li className="cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:text-cyan-700">
-              About
-            </li>
-            <li className="cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:text-cyan-700">
-              Solutions
-            </li>
-            <li className="cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:text-cyan-700">
-              Features
-            </li>
-            <li className="cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:text-cyan-700">
-              Pricing
-            </li>
-          </ul>
-        </motion.nav> */}
-
         <div className="hidden md:block">
-          <div className="flex justify-end space-x-2">
-            <Button
-              asChild
-              className="rounded-sm border-2 border-cyan-700 bg-white text-black transition-all duration-300 hover:bg-cyan-800 hover:text-white"
-            >
-              <Link to="sign-portal?portal=sign-up">Sign Up</Link>
-            </Button>
-            <Button
-              asChild
-              className="rounded-sm bg-cyan-700 hover:bg-cyan-800"
-            >
-              <Link to="sign-portal?portal=sign-in">Login</Link>
-            </Button>
-          </div>
+          {user ? (
+            <div className="flex justify-end">
+              <Button
+                asChild
+                className="rounded-sm border-2 border-cyan-700 bg-white text-black transition-all duration-300 hover:bg-cyan-800 hover:text-white"
+              >
+                <Link to={`/dashboard/${getItem()}`}>Dashboard</Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="flex justify-end space-x-2">
+              <Button
+                asChild
+                className="rounded-sm border-2 border-cyan-700 bg-white text-black transition-all duration-300 hover:bg-cyan-800 hover:text-white"
+              >
+                <Link to="sign-portal?portal=sign-up">Sign Up</Link>
+              </Button>
+              <Button
+                asChild
+                className="rounded-sm bg-cyan-700 hover:bg-cyan-800"
+              >
+                <Link to="sign-portal?portal=sign-in">Login</Link>
+              </Button>
+            </div>
+          )}
         </div>
 
-        <div className="place-items-end hidden">
+        <div className="hidden place-items-end">
           <FaBars className="size-4 cursor-pointer" />
         </div>
       </div>

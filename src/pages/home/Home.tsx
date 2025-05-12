@@ -6,6 +6,7 @@ import FrequentlyAsked from "./FrequentlyAsked";
 import Footer from "./Footer";
 
 const Home = () => {
+
   return (
     <>
       <Header />
