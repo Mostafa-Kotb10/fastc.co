@@ -16,13 +16,11 @@ import { Employee } from "@/pages/dashboard/employees/employee.types";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
-  onEdit: (value: TData) => void;
   onDelete: (value: TData) => void;
 }
 
 const DataTableRowActions = <TData,>({
   onDelete,
-  onEdit,
   row,
 }: DataTableRowActionsProps<TData>) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);

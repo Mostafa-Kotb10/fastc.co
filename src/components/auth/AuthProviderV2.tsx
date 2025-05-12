@@ -16,7 +16,7 @@ const AuthContextV2 = createContext<AuthContextType | null>(null);
 
 export const AuthProviderV2 = ({ children }: { children: React.ReactNode }) => {
   // Get the tokens from localStorage if they exist.
-  const { getItem, setItem, removeItem } =
+  const { getItem,   } =
     useLocalStorage<AuthTokens>("tokens");
   const storedTokens = getItem();
 

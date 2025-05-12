@@ -45,7 +45,7 @@ const ShiftItem = ({ shift, onDelete, isLoading = false }: ShiftItemProps) => {
 export const ShiftItemWithContext = ({
   shift,
   onDelete,
-  isLoading = false,
+
 }: ShiftItemProps) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);

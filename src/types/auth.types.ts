@@ -16,11 +16,4 @@ export interface SignUpRequestValues {
   managedUser?: boolean;
 }
 
-type ErrorResponse = {
-  error: string;
-  message: string;
-  timestamp: string;
-  status: number;
-};
-
 export type SignUpResponse = { user: User; jwt: AuthTokens };

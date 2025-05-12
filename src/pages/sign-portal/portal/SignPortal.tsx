@@ -9,7 +9,7 @@ import useSignPortalContext from "@/hooks/useSignPortalContext";
 import { Link } from "react-router-dom";
 
 import signInImageSrc from "@/assets/images/sign-image.png";
-import signUpImageSrc from "@/assets/images/sign-up.png";
+import signUpImageSrc from "@/assets/images/sginupimage.jpg";
 
 const SignPortal = () => {
   const { portal } = useSignPortalContext();

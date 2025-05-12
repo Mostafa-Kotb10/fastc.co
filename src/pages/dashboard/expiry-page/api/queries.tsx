@@ -64,7 +64,7 @@ export const usePrefetchExpiryPage = () => {
 };
 
 
-type PrefetchPaginatedOptions<TParams> = {
+type PrefetchPaginatedOptions = {
   queryKeyBase: unknown[];
   page: number;
   size: number;
@@ -74,15 +74,14 @@ type PrefetchPaginatedOptions<TParams> = {
   dependencies?: any[];
 };
 
-export function usePrefetchPaginated<TParams>({
+export function usePrefetchPaginated({
   queryKeyBase,
   page,
   size,
   enabled = true,
   getQueryFn,
   getQueryKey,
-  dependencies = [],
-}: PrefetchPaginatedOptions<TParams>) {
+}: PrefetchPaginatedOptions) {
   const queryClient = useQueryClient();
 
   useEffect(() => {

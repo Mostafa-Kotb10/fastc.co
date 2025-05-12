@@ -95,7 +95,7 @@ const filterKeys = [
 ];
 
 export const IDSearchInput = ({ className }: { className?: string }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const [key, setKey] = useState("cashier_id");
   const [query, setQuery] = useState("");
 
@@ -274,8 +274,9 @@ export const TimeFilter = ({
   placeholderTo,
 }: TimeFilterProps) => {
   const [timeRange, setTimeRange] = useState<
-    { from: string; to: string } | undefined
+    { from?: string; to?: string } | undefined
   >(undefined);
+
   const [, setSearchParams] = useSearchParams();
 
   // Helper function to format time as HH:mm:ss
@@ -383,14 +384,17 @@ export const TimeFilter = ({
               </div>
 
               <Button
-                onClick={() =>
-                  onSelectTime(
-                    Number(timeRange?.from.split(":")[0]),
-                    Number(timeRange?.from.split(":")[1]),
-                    Number(timeRange?.to.split(":")[0]),
-                    Number(timeRange?.to.split(":")[1]),
-                  )
-                }
+                onClick={() => {
+                  if (timeRange?.from && timeRange?.to) {
+                    const [fromHour, fromMinute] = timeRange.from
+                      .split(":")
+                      .map(Number);
+                    const [toHour, toMinute] = timeRange.to
+                      .split(":")
+                      .map(Number);
+                    onSelectTime(fromHour, fromMinute, toHour, toMinute);
+                  }
+                }}
               >
                 Apply Time Filter
               </Button>

@@ -30,7 +30,7 @@ import DashboardHeader from "../components/DashboardHeader";
 
 const EmployeesPage = () => {
   const { pharmacyId } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const status = searchParams.get("filter") || "";
 
@@ -39,9 +39,9 @@ const EmployeesPage = () => {
     status,
   });
 
-  const { shifts, isLoadingShifts } = usePharmacyShifts();
+  const { shifts} = usePharmacyShifts();
 
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
+  const [, setSelectedEmployee] = useState<Employee>();
 
   const { deleteEmployee } = useDeleteEmployee();
 

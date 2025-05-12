@@ -14,13 +14,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TimePickerDemo } from "@/components/time-picker-demo";
 import { useCreateShift } from "@/pages/dashboard/pharmacy/api/mutations";
-import { useParams } from "react-router-dom";
+
 
 const midnight = new Date();
 midnight.setHours(0, 0, 0, 0);
 
 const AddShiftForm = () => {
-  const { pharmacyId } = useParams();
   const form = useForm<ShiftValues>({
     resolver: zodResolver(shiftSchema),
     defaultValues: {
@@ -29,7 +28,7 @@ const AddShiftForm = () => {
       endTime: midnight,
     },
   });
-  const { createShift, isCreatingShift } = useCreateShift(Number(pharmacyId));
+  const { createShift, isCreatingShift } = useCreateShift();
 
   const onSubmit = (values: ShiftValues) => {
     const formatTime = (date: Date) =>

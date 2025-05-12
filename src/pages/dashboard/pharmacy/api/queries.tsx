@@ -10,7 +10,7 @@ import { useGetMe } from "@/services/user/queries";
 import { useEffect } from "react";
 
 export const useGetUserPharmacies = () => {
-  const { user, isPending } = useGetMe();
+  const { user } = useGetMe();
   return useQuery({
     queryKey: ["pharmacies", user?.id],
     queryFn: getUserPharmacies,

@@ -18,7 +18,7 @@ export const getUser = async () => {
   return (await AxiosInstance.get<User>("/api/v1/auth/me")).data;
 };
 
-export const refreshSession = async (refreshToken: string) => {
+export const refreshSession = async (refreshToken: string | undefined) => {
   return (
     await AxiosInstance.post<AuthTokens>("/api/v1/auth/refresh", {
       refreshToken,

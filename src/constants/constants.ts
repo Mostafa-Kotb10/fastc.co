@@ -182,39 +182,39 @@ export type FeatureCard = {
 
 export const featureCards: FeatureCard[] = [
   {
-    title: "Streamline Pharmacy Operations Effortlessly",
+    title: "All-in-One Web Dashboard Platform",
     description:
-      "The system features an automated invoicing function that allows users to scan products using a camera. It instantly generates an invoice with accurate pricing, making the checkout process quick and efficient.",
+      "Manage your pharmacy chain from a centralized, browser-based dashboard. Owners and branch managers can view insights, control stock, and oversee staff remotely. No installation or extra setup—just log in and get to work.",
     benefits: [
-      "Automated invoicing with camera scan",
-      "Instant invoice generation",
-      "Faster checkout process",
+      "Access from anywhere",
+      "Real-time analytics",
+      "Centralized control",
     ],
     icon: MdPointOfSale,
     src: counterSrc,
     Bgcolor: "bg-cyan-700",
   },
   {
-    title: "Automated Invoicing for Faster Transactions",
+    title: "Android App for On-the-Go Selling",
     description:
-      "Reduce transaction times with a fully automated invoicing system. Simply scan products to generate invoices instantly, ensuring pricing accuracy and efficiency.",
+      "Pharmacy employees can sell, manage, and restock directly from their phone. The app supports drug recognition via camera and receipt-linked sales flow. It also tracks all actions per user and keeps inventory up to date.",
     benefits: [
-      "Quick product scanning",
-      "Accurate pricing",
-      "Seamless checkout experience",
+      "Easy-to-use interface",
+      "Camera drug recognition",
+      "Auto-sync with database",
     ],
     icon: FaFileInvoiceDollar,
     src: calculatorSrc,
     Bgcolor: "bg-cyan-600",
   },
   {
-    title: "Interactive Dashboard for Performance Insights",
+    title: "Barcode-Free AI Camera Detection",
     description:
-      "A user-friendly dashboard provides comprehensive reports on daily and monthly sales and profits. This allows pharmacy owners to monitor financial performance effortlessly and make informed business decisions.",
+      "Replace bulky scanners with real-time drug detection using your camera. The AI model identifies medicine boxes from live feed with high accuracy. This streamlines cashiering and reduces hardware dependencies",
     benefits: [
-      "Real-time sales tracking",
-      "Monthly performance reports",
-      "Data-driven decision making",
+      "Hands-free detection",
+      "Faster checkout",
+      "No extra hardware",
     ],
     icon: FaChartLine,
     src: tablet1Src,
@@ -223,11 +223,11 @@ export const featureCards: FeatureCard[] = [
   {
     title: "Low-Stock Alerts and Supplier Integration",
     description:
-      "The system identifies products that need restocking and enables direct order placement from suppliers. This feature helps maintain product availability and prevents stock shortages.",
+      "Interactive Cart-Based Selling System Add drugs to a cart by name or camera, then adjust quantities as needed. Employees can finalize the sale with ease and confidence in the data. The system supports quick training and a smooth user experience.",
     benefits: [
-      "Automated low-stock alerts",
-      "Seamless supplier integration",
-      "Prevent stock shortages",
+      "Drag-and-drop sales",
+      "Quantity control",
+      "Pharmacy-focused flow",
     ],
     icon: MdWarning,
     src: storageShelfSrc,
@@ -236,11 +236,11 @@ export const featureCards: FeatureCard[] = [
   {
     title: "Secure Employee Management and Access Control",
     description:
-      "Pharmacy owners can create employee accounts with customized access permissions, ensuring data security and efficient workflow management while preventing unauthorized access.",
+      "Intelligent Stock and Expiry Monitoring Track inventory, restocks, and expiry dates automatically with visual alerts. Owners can set custom expiry thresholds and optimize shelf organization. The system helps reduce waste and improves stock accuracy.",
     benefits: [
-      "Role-based access control",
-      "Improved data security",
-      "Efficient employee management",
+      "Expiry alerts",
+      "Adjustable thresholds",
+      "Stock monitoring",
     ],
     icon: MdSecurity,
     src: handWithTabletSrc,

@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Receipts from "./components/Receipts";
 import Reports from "./components/Reports";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import DashboardHeader from "../components/DashboardHeader";
 
 const SalesPage = () => {
