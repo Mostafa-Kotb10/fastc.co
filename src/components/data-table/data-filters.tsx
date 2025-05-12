@@ -13,13 +13,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
-import { CalendarIcon, SearchIcon } from "lucide-react";
+import { CalendarIcon, SearchIcon, Check, ChevronsUpDown } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { DateRange } from "react-day-picker";
 import { cn } from "@/lib/utils";
+import { Employee } from "@/pages/dashboard/employees/employee.types";
+import { Spinner } from "../Spinner";
 
 export const ClearFiltersButton = () => {
   const [, setSearchParams] = useSearchParams();
@@ -33,7 +45,7 @@ export const ClearFiltersButton = () => {
 
 export const SearchInput = ({
   className,
-  showIcon = true,
+  showIcon = false,
 }: {
   className?: string;
   showIcon?: boolean;
@@ -264,7 +276,7 @@ export const TimeFilter = ({
   const [timeRange, setTimeRange] = useState<
     { from: string; to: string } | undefined
   >(undefined);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   // Helper function to format time as HH:mm:ss
   const formatTime = (hours: number, minutes: number): string => {
@@ -389,3 +401,90 @@ export const TimeFilter = ({
     </div>
   );
 };
+
+interface ComboboxFilterProps {
+  employees: Employee[];
+  isLoading: boolean;
+}
+
+export function ComboboxFilter({ employees, isLoading }: ComboboxFilterProps) {
+  const [, setSearchParams] = useSearchParams();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  const handleUserIdSelect = (userId: number | null) => {
+    setSearchParams((prev) => {
+      if (userId) {
+        prev.set("cashier_id", userId.toString());
+      } else {
+        prev.delete("cashier_id");
+      }
+      return prev;
+    });
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[200px] justify-between"
+        >
+          {value
+            ? employees.find((e) => e.user.id.toString() === value)?.user
+                .username
+            : "Select employee..."}
+          <ChevronsUpDown className="opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command
+          filter={(value, search) =>
+            value.toLowerCase().includes(search.toLowerCase()) ? 1 : 0
+          }
+        >
+          <CommandInput placeholder="Search employees..." />
+          <CommandList>
+            <CommandEmpty>No users found.</CommandEmpty>
+            <CommandGroup>
+              {!isLoading ? (
+                employees.map((employee) => {
+                  const idStr = employee.user.id.toString();
+                  return (
+                    <CommandItem
+                      key={idStr}
+                      value={employee.user.username}
+                      onSelect={(username) => {
+                        const selected = employees.find(
+                          (e) => e.user.username === username,
+                        );
+                        const newId = selected?.user.id.toString() ?? "";
+                        const finalId = newId === value ? "" : newId;
+
+                        setValue(finalId);
+                        setOpen(false);
+                        handleUserIdSelect(finalId ? Number(finalId) : null);
+                      }}
+                    >
+                      {employee.user.username}
+                      <Check
+                        className={cn(
+                          "ml-auto",
+                          value === idStr ? "opacity-100" : "opacity-0",
+                        )}
+                      />
+                    </CommandItem>
+                  );
+                })
+              ) : (
+                <Spinner />
+              )}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}

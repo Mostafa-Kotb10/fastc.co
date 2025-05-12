@@ -10,6 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSearchPharmacy } from "../pharmacy/api/api";
 import { CustomPagination } from "@/components/data-table/data-pagination";
 import { useEffect } from "react";
+import DashboardHeader from "../components/DashboardHeader";
 
 const Inventory = () => {
   const { pharmacyId } = useParams<{ pharmacyId: string }>();
@@ -72,7 +73,7 @@ const Inventory = () => {
 
   return (
     <>
-      <h1 className="mt-10 text-4xl font-bold">Inventory</h1>
+      <DashboardHeader className="mt-10 text-4xl font-bold">Inventory</DashboardHeader>
       <div className="mt-10">
         <div className="flex justify-between">
           <SearchInput className="mb-3 max-w-[30rem]" />

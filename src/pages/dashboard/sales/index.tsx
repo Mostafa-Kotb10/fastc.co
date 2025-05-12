@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Receipts from "./components/Receipts";
 import Reports from "./components/Reports";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import DashboardHeader from "../components/DashboardHeader";
 
 const SalesPage = () => {
   const [, setSearchParams] = useSearchParams();
@@ -12,7 +13,7 @@ const SalesPage = () => {
 
   return (
     <>
-      <h1 className="mt-10 text-4xl font-bold">Sales</h1>
+      <DashboardHeader>Sales</DashboardHeader>
       <Tabs
         defaultValue="sales"
         className="mt-10 flex items-center justify-center"

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import { useSignInStore } from "@/store/signInStore";
 
 import { User } from "@/types/user.types";
 import { Pharmacy } from "@/pages/dashboard/pharmacy/pharmacy.types";
+import { getPharmacyDetails } from "@/pages/dashboard/pharmacy/api/api";
 
 export const useSignUp = () => {
   const { setItem } = useLocalStorage("tokens");
@@ -59,6 +60,8 @@ export const useSignIn = () => {
   const { getItem } = useLocalStorage("i");
   const { setIsSignedIn } = useSignInStore();
 
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
 
   const pharmacyId = getItem();
@@ -87,11 +90,16 @@ export const useSignIn = () => {
           const pharmacies: Pharmacy[] = (
             await SignInstance.get("/api/v1/users/pharmacy")
           ).data;
+          
           navigate(`/dashboard/${pharmacies[0].id}`);
         }
 
         if (user.role === "OWNER") {
           if (pharmacyId) {
+            queryClient.prefetchQuery({
+              queryKey: ["pharmacy", pharmacyId],
+              queryFn: () => getPharmacyDetails(Number(pharmacyId)),
+            });
             navigate(`/dashboard/${pharmacyId}`);
           } else {
             navigate("/pick-pharmacy");

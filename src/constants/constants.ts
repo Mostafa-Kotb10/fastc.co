@@ -8,13 +8,7 @@ import {
 
 import { MdSecurity, MdWarning, MdPointOfSale } from "react-icons/md";
 
-import {
-  FiPackage,
-  FiUsers,
-  FiShoppingCart,
-  FiTrendingUp,
-  FiCalendar,
-} from "react-icons/fi";
+import { FiPackage, FiUsers, FiTrendingUp, FiCalendar } from "react-icons/fi";
 
 import {
   FaReact,
@@ -37,6 +31,7 @@ import {
 
 import { IconType } from "react-icons/lib";
 import { ReportItem } from "@/pages/dashboard/sales/sales.types";
+import { LineChart } from "lucide-react";
 
 export type TimelineItem = {
   title: string;
@@ -306,6 +301,11 @@ export type SidebarLink = {
 };
 
 export const sidebarLinks: SidebarLink[] = [
+  {
+    title: "Analysis",
+    path: "",
+    icon: LineChart,
+  },
   {
     title: "Inventory",
     path: "inventory",
