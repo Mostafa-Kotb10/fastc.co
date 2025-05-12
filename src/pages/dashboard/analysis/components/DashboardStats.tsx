@@ -1,4 +1,3 @@
-
 import { Analytics } from "../analytics.types";
 import { cn } from "@/lib/utils";
 import { ChartBar, DollarSign, ReceiptText, TrendingUp } from "lucide-react";
@@ -33,7 +32,10 @@ const DashboardStats = ({ stats, className }: DashboardStatsProps) => {
       />
       <AnalyticCard
         title="Median Receipt"
-        value={stats?.medianReceipt}
+        value={stats?.medianReceipt?.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
         icon={<ChartBar className="size-6" />}
       />
     </div>

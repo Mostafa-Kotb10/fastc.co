@@ -136,9 +136,13 @@ export const useSignIn = () => {
 
 export const useSignOut = () => {
   const { removeItem } = useLocalStorage("tokens");
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const signOut = () => {
+    queryClient.invalidateQueries({
+      queryKey: ["user"],
+    });
     navigate("/", { replace: true });
     removeItem();
   };

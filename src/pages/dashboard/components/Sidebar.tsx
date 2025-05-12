@@ -5,9 +5,10 @@ import { useSidebarContext } from "@/hooks/useSidebarContext";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { IconType } from "react-icons";
-import { FiSidebar } from "react-icons/fi";
+import { FiLogOut, FiSidebar } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { useSignOut } from "@/services/auth/mutations";
 
 const Sidebar = () => {
   return (
@@ -64,6 +65,7 @@ const SidebarContainer = () => {
           <Option key={path} title={title} path={path} Icon={Icon} />
         ))}
       </motion.div>
+      <SidebarFooter />*
     </motion.nav>
   );
 };
@@ -168,6 +170,39 @@ const TitleSection = () => {
         </motion.div>
       </div>
     </motion.div>
+  );
+};
+
+const SidebarFooter = () => {
+  const { isOpen } = useSidebarContext();
+  const { signOut } = useSignOut();
+
+  return (
+    <div className="absolute bottom-0 left-0 w-full p-2">
+      <motion.button
+        layout
+        className="group relative flex h-10 w-full cursor-pointer items-center transition-colors hover:bg-white"
+        onClick={signOut}
+      >
+        <motion.div
+          layout
+          className="grid h-full w-10 place-content-center text-lg text-white group-hover:text-black"
+        >
+          <FiLogOut />
+        </motion.div>
+        {isOpen && (
+          <motion.span
+            layout
+            className="ml-2 text-sm text-white group-hover:text-black"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
+            Sign out
+          </motion.span>
+        )}
+      </motion.button>
+    </div>
   );
 };
 

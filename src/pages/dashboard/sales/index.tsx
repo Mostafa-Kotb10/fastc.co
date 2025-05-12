@@ -13,7 +13,7 @@ const SalesPage = () => {
 
   return (
     <>
-      <DashboardHeader>Sales</DashboardHeader>
+      <DashboardHeader className="mt-10">Sales</DashboardHeader>
       <Tabs
         defaultValue="sales"
         className="mt-10 flex items-center justify-center"

@@ -66,7 +66,7 @@ const ExpiryPage = () => {
 
   return (
     <>
-      <DashboardHeader>Expiry Page</DashboardHeader>
+      <DashboardHeader className="mt-10">Expiry Page</DashboardHeader>
       <div className="mt-10">
         <div className="flex justify-between">
           <SearchInput className="mb-3 max-w-[30rem]" />

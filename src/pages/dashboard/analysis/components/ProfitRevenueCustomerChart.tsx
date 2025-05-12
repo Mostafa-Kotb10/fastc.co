@@ -30,7 +30,6 @@ const chartConfig: ChartConfig = {
   },
 };
 
-// Generate monthly ranges from Jan to now
 function getMonthlyDateRanges() {
   const now = new Date();
   const months = [];
@@ -61,7 +60,6 @@ export function ProfitRevenueCustomerChart() {
         }),
     })),
   });
-
 
   const chartData = monthlyRanges.map((range, index) => {
     const data = analyticsQueries[index].data;
@@ -101,24 +99,25 @@ export function ProfitRevenueCustomerChart() {
               <linearGradient id="fillProfit" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-profit)"
+                  stopColor="var(--color-green-500)" // Shadcn's green color
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-profit)"
+                  stopColor="var(--color-green-500)" // Shadcn's green color
                   stopOpacity={0.1}
                 />
               </linearGradient>
+
               <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-revenue)"
+                  stopColor="var(--color-blue-500)" // Shadcn's blue color
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-revenue)"
+                  stopColor="var(--color-blue-500)" // Shadcn's blue color
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -127,7 +126,7 @@ export function ProfitRevenueCustomerChart() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => `$${value}`} // optional formatting
+              tickFormatter={(value) => `$${value}`}
             />
 
             <Area

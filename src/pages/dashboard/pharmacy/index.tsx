@@ -15,7 +15,6 @@ const PharmacyPage = () => {
   const queryClient = useQueryClient();
 
   const {user, isPending: isLoadingUser} = useGetMe(); 
-  console.log(user);
   const { data: pharmacies, isPending: isLoadingPharmacies } =
     useGetUserPharmacies();
 
@@ -38,7 +37,7 @@ const PharmacyPage = () => {
 
   return (
     <>
-      <DashboardHeader>My Pharmacies</DashboardHeader>
+      <DashboardHeader className="mt-10">My Pharmacies</DashboardHeader>
 
       <div className="mt-10 space-y-3">
         <CreatePharmacyDialog onlyBranch pharmacyId={Number(pharmacyId)} />

@@ -63,7 +63,7 @@ export function ProfitRevenuePieChart({
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Business Summary</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -89,11 +89,8 @@ export function ProfitRevenuePieChart({
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
         <div className="text-muted-foreground leading-none">
-          Showing profit, revenue, and receipts for the last 6 months
+          Showing profit, revenue, and receipts
         </div>
       </CardFooter>
     </Card>
